@@ -2,7 +2,7 @@ name: Release
 
 on:
   workflow_run:
-    workflows: [Perform Tests]
+    workflows: [Build & Test]
     branches: [main]
     types: [completed]
 
@@ -12,11 +12,13 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} && ${{ github.ref == 'refs/heads/main' || github.event_name == 'schedule' }} && "!contains(github.event.head_commit.message, '[skip=build]')"
     steps:
       - name: Download Databases
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: build
+          workflow: build.yml
 
       - name: Set some env variables
         run: |

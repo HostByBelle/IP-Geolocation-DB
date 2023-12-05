@@ -1,4 +1,4 @@
-name: Automated Build
+name: Build & Test
 
 on:
   push:
@@ -7,6 +7,9 @@ on:
     branches: [main]
   schedule:
     - cron: 0 0 * * * # Daily at midnight UTC
+
+env:
+  TEST_IPV6: false
 
 jobs:
   # First we need to compile the mmdbmeld project so we can build the DBs
@@ -112,3 +115,33 @@ jobs:
         with:
           name: build
           path: ./build
+
+  run-tests:
+    runs-on: ubuntu-latest
+    needs: build-database
+    steps:
+      - name: Download Databases
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+
+      - name: Download Tools
+        uses: actions/download-artifact@v3
+        with:
+          name: tools
+
+      - run: |
+          chmod +x mmdbcheck
+
+      - name: Test IPv4 DBs
+        run: |
+          find . -type f -name "*v4*.mmdb" -print | while read -r file; do
+            ./mmdbcheck all $file
+          done
+
+      - name: Test IPv6 DBs
+        if: ${{ env.TEST_IPV6 }} === 'true'
+        run: |
+          find . -type f -name "*v6*.mmdb" -print | while read -r file; do
+            ./mmdbcheck all $file
+          done
