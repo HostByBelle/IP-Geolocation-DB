@@ -137,6 +137,9 @@ jobs:
         name: ${{ env.RELEASE_DATE }}
         tag_name: ${{ env.RELEASE_TAG }}
         fail_on_unmatched_files: true
+        body: |
+          ## Built on: ${{ env.RELEASE_DATE }}
+          Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the varients available.
 
     - uses: dev-drprasad/delete-older-releases@v0.3.2
       with:

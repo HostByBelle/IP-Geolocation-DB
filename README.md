@@ -21,10 +21,9 @@ Presently, only database sources under the [CC0](https://creativecommons.org/pub
 ### CC0
 
 These URLS will always point to the latest version of the database.
-- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-cc0-v4.mmdb) (Covers: `country`)
-- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-cc0-v6.mmdb) (Covers: `country`)
+- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-cc0-v4.mmdb) (File name: `geoip-cc0-v4.mmdb ` Included data: `country`)
+- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-cc0-v6.mmdb) (File name: `geoip-cc0-v6.mmdb` Included data: `country`)
 
 ## Licensing
 
 All code in this repository is licensed under the CC0 license. The [mmdbmeld](https://github.com/safing/mmdbmeld) and [ip-location-db](https://github.com/sapics/ip-location-db) projects each have their own licenses as do the original databases. Presently, only databases under the CC0 license are utilized.
-
