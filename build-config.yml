@@ -105,3 +105,42 @@ databases:
       floatDecimals: 3
       forceIPVersion: true
       maxPrefix: 0
+
+  ## Start of PDDL Country + ASN DBs
+  - name: "IPv4 - PDDL - Country & ASN"
+    mmdb:
+      ipVersion: 4
+      recordSize: 24
+    types:
+      "country.iso_code": string
+      "autonomous_system_organization": string
+      "autonomous_system_number": uint32
+    inputs:
+      - file: "DBs/iptoasn-country-ipv4.csv"
+        fields: ["from", "to", "country.iso_code"]
+      - file: "DBs/iptoasn-asn-ipv4.csv"
+        fields: ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
+    output: build/geoip-pddl-country-asn-v4.mmdb
+    optimize:
+      floatDecimals: 3
+      forceIPVersion: true
+      maxPrefix: 0
+
+  - name: "IPv6 - PDDL - Country & ASN"
+    mmdb:
+      ipVersion: 6
+      recordSize: 24
+    types:
+      "country.iso_code": string
+      "autonomous_system_organization": string
+      "autonomous_system_number": uint32
+    inputs:
+      - file: "DBs/iptoasn-country-ipv6.csv"
+        fields: ["from", "to", "country.iso_code"]
+      - file: "DBs/iptoasn-asn-ipv6.csv"
+        fields: ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
+    output: build/geoip-pddl-country-asn-v6.mmdb
+    optimize:
+      floatDecimals: 3
+      forceIPVersion: true
+      maxPrefix: 0
