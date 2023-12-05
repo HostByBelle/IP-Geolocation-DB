@@ -1,4 +1,4 @@
-name: Automated Build
+name: Build & Test
 
 on:
   push:
@@ -140,7 +140,7 @@ jobs:
           done
 
       - name: Test IPv6 DBs
-        if: ${{ env.TEST_IPV6 }}
+        if: ${{ env.TEST_IPV6 }} == 'true'
         run: |
           find . -type f -name "*v6*.mmdb" -print | while read -r file; do
             ./mmdbcheck all $file

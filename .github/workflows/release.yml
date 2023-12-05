@@ -2,7 +2,9 @@ name: Release
 
 on:
   workflow_run:
-    workflows: [Automated Build]
+  paths-ignore:
+      - '*.md'
+    workflows: [Build & Test]
     branches: [main]
     types: [completed]
 
@@ -12,7 +14,7 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} && ${{ github.ref == 'refs/heads/main' || github.event_name == 'schedule' }}
     steps:
       - name: Download Databases
         uses: dawidd6/action-download-artifact@v2
