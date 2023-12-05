@@ -13,7 +13,7 @@ databases:
     inputs:
       - file: "DBs/geo-whois-asn-country-ipv4.csv"
         fields: ["from", "to", "country.iso_code"]
-    output: build/geoip-cc0-v4.mmdb
+    output: build/cc0-v4.mmdb
     optimize:
       floatDecimals: 3
       forceIPVersion: true
@@ -30,7 +30,7 @@ databases:
     inputs:
       - file: "DBs/geo-whois-asn-country-ipv6.csv"
         fields: ["from", "to", "country.iso_code"]
-    output: build/geoip-cc0-v6.mmdb
+    output: build/cc0-v6.mmdb
     optimize:
       floatDecimals: 3
       forceIPVersion: true
@@ -48,7 +48,7 @@ databases:
     inputs:
       - file: "DBs/iptoasn-asn-ipv4.csv"
         fields: ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
-    output: build/geoip-pddl-asn-v4.mmdb
+    output: build/pddl-asn-v4.mmdb
     optimize:
       floatDecimals: 3
       forceIPVersion: true
@@ -65,7 +65,7 @@ databases:
     inputs:
       - file: "DBs/iptoasn-asn-ipv6.csv"
         fields: ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
-    output: build/geoip-pddl-asn-v6.mmdb
+    output: build/pddl-asn-v6.mmdb
     optimize:
       floatDecimals: 3
       forceIPVersion: true
@@ -83,7 +83,7 @@ databases:
     inputs:
       - file: "DBs/iptoasn-country-ipv4.csv"
         fields: ["from", "to", "country.iso_code"]
-    output: build/geoip-pddl-country-v4.mmdb
+    output: build/pddl-country-v4.mmdb
     optimize:
       floatDecimals: 3
       forceIPVersion: true
@@ -100,7 +100,7 @@ databases:
     inputs:
       - file: "DBs/iptoasn-country-ipv6.csv"
         fields: ["from", "to", "country.iso_code"]
-    output: build/geoip-pddl-country-v6.mmdb
+    output: build/pddl-country-v6.mmdb
     optimize:
       floatDecimals: 3
       forceIPVersion: true
@@ -120,7 +120,7 @@ databases:
         fields: ["from", "to", "country.iso_code"]
       - file: "DBs/iptoasn-asn-ipv4.csv"
         fields: ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
-    output: build/geoip-pddl-country-asn-v4.mmdb
+    output: build/pddl-country-asn-v4.mmdb
     optimize:
       floatDecimals: 3
       forceIPVersion: true
@@ -139,7 +139,89 @@ databases:
         fields: ["from", "to", "country.iso_code"]
       - file: "DBs/iptoasn-asn-ipv6.csv"
         fields: ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
-    output: build/geoip-pddl-country-asn-v6.mmdb
+    output: build/pddl-country-asn-v6.mmdb
+    optimize:
+      floatDecimals: 3
+      forceIPVersion: true
+      maxPrefix: 0
+
+  ## Start of CC0 + PDDL Country + ASN DBs (Varient 1)
+  - name: "IPv4 - CC0 - PDDL - Country & ASN (Varient 1)"
+    mmdb:
+      ipVersion: 4
+      recordSize: 24
+    types:
+      "country.iso_code": string
+      "autonomous_system_organization": string
+      "autonomous_system_number": uint32
+    inputs:
+      - file: "DBs/geo-whois-asn-country-ipv4.csv"
+        fields: ["from", "to", "country.iso_code"]
+      - file: "DBs/iptoasn-asn-ipv4.csv"
+        fields: ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
+    output: build/cc0-pddl-country-asn-v4-varient-1.mmdb
+    optimize:
+      floatDecimals: 3
+      forceIPVersion: true
+      maxPrefix: 0
+
+  - name: "IPv6 - CC0 - PDDL - Country & ASN"
+    mmdb:
+      ipVersion: 6
+      recordSize: 24
+    types:
+      "country.iso_code": string
+      "autonomous_system_organization": string
+      "autonomous_system_number": uint32
+    inputs:
+      - file: "DBs/geo-whois-asn-country-ipv6.csv"
+        fields: ["from", "to", "country.iso_code"]
+      - file: "DBs/iptoasn-asn-ipv6.csv"
+        fields: ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
+    output: build/cc0-pddl-country-asn-v6-varient-1.mmdb
+    optimize:
+      floatDecimals: 3
+      forceIPVersion: true
+      maxPrefix: 0
+
+  ## Start of CC0 + PDDL Country + ASN DBs (Varient 2)
+  - name: "IPv4 - CC0 - PDDL - Country & ASN (Varient 2)"
+    mmdb:
+      ipVersion: 4
+      recordSize: 24
+    types:
+      "country.iso_code": string
+      "autonomous_system_organization": string
+      "autonomous_system_number": uint32
+    inputs:
+      - file: "DBs/geo-whois-asn-country-ipv4.csv"
+        fields: ["from", "to", "country.iso_code"]
+      - file: "DBs/iptoasn-country-ipv4.csv"
+        fields: ["from", "to", "country.iso_code"]
+      - file: "DBs/iptoasn-asn-ipv4.csv"
+        fields: ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
+    output: build/cc0-pddl-country-asn-v4-varient-2.mmdb
+    optimize:
+      floatDecimals: 3
+      forceIPVersion: true
+      maxPrefix: 0
+
+  - name: "IPv6 - CC0 - PDDL - Country & ASN"
+    mmdb:
+      ipVersion: 6
+      recordSize: 24
+    types:
+      "country.iso_code": string
+      "autonomous_system_organization": string
+      "autonomous_system_number": uint32
+    inputs:
+      - file: "DBs/geo-whois-asn-country-ipv6.csv"
+        fields: ["from", "to", "country.iso_code"]
+      - file: "DBs/iptoasn-country-ipv6.csv"
+        fields: ["from", "to", "country.iso_code"]
+      - file: "DBs/iptoasn-asn-ipv6.csv"
+        fields: ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
+    output: build/cc0-pddl-country-asn-v6-varient-2.mmdb
     optimize:
       floatDecimals: 3
       forceIPVersion: true

@@ -23,8 +23,8 @@ These URLs will always point to the latest version of the database.
 
 These databases only include country information.
 
-- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-cc0-v4.mmdb) (File name: `geoip-cc0-v4.mmdb`)
-- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-cc0-v6.mmdb) (File name: `geoip-cc0-v6.mmdb`)
+- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-v4.mmdb) (File name: `cc0-v4.mmdb`)
+- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-v6.mmdb) (File name: `cc0-v6.mmdb`)
 
 ### [PDDL](https://opendatacommons.org/licenses/pddl/1-0/) License
 
@@ -32,22 +32,22 @@ These databases only include country information.
 
 These databases only include ![ASN](https://www.arin.net/resources/guide/asn/) information.
 
-- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-pddl-asn-v4.mmdb) (File name: `geoip-pddl-asn-v4.mmdb`)
-- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-pddl-asn-v6.mmdb) (File name: `geoip-pddl-asn-v6.mmdb`)
+- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-asn-v4.mmdb) (File name: `pddl-asn-v4.mmdb`)
+- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-asn-v6.mmdb) (File name: `pddl-asn-v6.mmdb`)
 
 #### Country
 
 These databases only include country information.
 
-- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-pddl-country-v4.mmdb) (File name: `geoip-pddl-country-v4.mmdb`)
-- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-pddl-country-v6.mmdb) (File name: `geoip-pddl-country-v6.mmdb`)
+- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-v4.mmdb) (File name: `pddl-country-v4.mmdb`)
+- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-v6.mmdb) (File name: `pddl-country-v6.mmdb`)
 
 #### Country + ASN
 
 These databases include both ASN and country information.
 
-- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-pddl-country-asn-v4.mmdb) (File name: `geoip-pddl-country-asn-v4.mmdb`)
-- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-pddl-country-asn-v6.mmdb) (File name: `geoip-pddl-country-asn-v6.mmdb`)
+- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-asn-v4.mmdb) (File name: `pddl-country-asn-v4.mmdb`)
+- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-asn-v6.mmdb) (File name: `pddl-country-asn-v6.mmdb`)
 
 ## Licensing
 
