@@ -2,7 +2,7 @@ name: Perform Tests
 
 on:
   workflow_run:
-    workflows: [build-database]
+    workflows: [Automated build]
     types: [completed]
 
 # IPv6 DBs take a long time to test. IPv4 however, is really quick
