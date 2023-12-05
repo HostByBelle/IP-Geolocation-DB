@@ -2,7 +2,7 @@ name: Release
 
 on:
   workflow_run:
-    workflows: [Perform Tests]
+    workflows: [Automated Build]
     branches: [main]
     types: [completed]
 
@@ -12,6 +12,7 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Download Databases
         uses: dawidd6/action-download-artifact@v2
