@@ -96,6 +96,26 @@ jobs:
           --etag-compare geo-whois-asn-country-ipv6.csv.etag \
           --output geo-whois-asn-country-ipv6.csv \
           "https://cdn.jsdelivr.net/npm/@ip-location-db/geo-whois-asn-country/geo-whois-asn-country-ipv6.csv"
+        curl --show-error \
+          --etag-save iptoasn-asn-ipv4.csv.etag \
+          --etag-compare iptoasn-asn-ipv4.csv.etag \
+          --output iptoasn-asn-ipv4.csv \
+          "https://cdn.jsdelivr.net/npm/@ip-location-db/iptoasn-asn/iptoasn-asn-ipv4.csv"
+        curl --show-error \
+          --etag-save iptoasn-asn-ipv6.csv.etag \
+          --etag-compare iptoasn-asn-ipv6.csv.etag \
+          --output iptoasn-asn-ipv6.csv \
+          "https://cdn.jsdelivr.net/npm/@ip-location-db/iptoasn-asn/iptoasn-asn-ipv6.csv"
+        curl --show-error \
+          --etag-save iptoasn-country-ipv4.csv.etag \
+          --etag-compare iptoasn-country-ipv4.csv.etag \
+          --output iptoasn-country-ipv4.csv \
+          "https://cdn.jsdelivr.net/npm/@ip-location-db/iptoasn-country/iptoasn-country-ipv4.csv"
+        curl --show-error \
+          --etag-save iptoasn-country-ipv6.csv.etag \
+          --etag-compare iptoasn-country-ipv6.csv.etag \
+          --output iptoasn-country-ipv6.csv \
+          "https://cdn.jsdelivr.net/npm/@ip-location-db/iptoasn-country/iptoasn-country-ipv6.csv"
 
     - name: Save DB Cache
       uses: actions/cache/save@v3
