@@ -20,14 +20,14 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       GO_VERSION: '1.21.4'
-      MMDBMELD_TAG: 'v0.1.1'
+      MMDBMELD_TAG: 'v0.2.0'
     steps:
     - name: Check for Cached Tools Build
       uses: actions/cache@v3
       id: tools-cache
       with:
         path: ./tools
-        key: ${{ env.GO_VERSION }}-${{ env.MMDBMELD_TAG }}
+        key: go-v${{ env.GO_VERSION }}-mmdbmeld-v${{ env.MMDBMELD_TAG }}
       
     - name: Set up Go
       uses: actions/setup-go@v4
@@ -76,13 +76,7 @@ jobs:
         chmod +x mmdbmeld
         chmod +x mmdbcheck
 
-    - name: Fetch DB Cache
-      uses: actions/cache@v3
-      with:
-        key: DB
-        path: |
-          ./DBs
-
+    # TODO: We are saving etags which can be utilized for proper caching of these databases. Ideally, we should implement a method to do so so that any DB that doesn't get updated doesn't need to be redownloaded daily.
     - name: Download DBs
       working-directory: ./DBs
       run: |
@@ -116,13 +110,6 @@ jobs:
           --etag-compare iptoasn-country-ipv6.csv.etag \
           --output iptoasn-country-ipv6.csv \
           "https://cdn.jsdelivr.net/npm/@ip-location-db/iptoasn-country/iptoasn-country-ipv6.csv"
-
-    - name: Save DB Cache
-      uses: actions/cache/save@v3
-      with:
-        key: DB
-        path: |
-          ./DBs
 
     - name: Build DBs
       run: ./mmdbmeld build-config.yml

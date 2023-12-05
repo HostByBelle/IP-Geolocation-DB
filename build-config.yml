@@ -165,7 +165,7 @@ databases:
       forceIPVersion: true
       maxPrefix: 0
 
-  - name: "IPv6 - CC0 - PDDL - Country & ASN"
+  - name: "IPv6 - CC0 - PDDL - Country & ASN (Variant 1)"
     mmdb:
       ipVersion: 6
       recordSize: 24
