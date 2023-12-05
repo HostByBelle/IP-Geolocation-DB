@@ -1,4 +1,3 @@
-
 # IP Geolocation DB
 
 This repository automatically builds IP geolocation databases in the `.mmdb` database format for both IPv4 and IPv6.
@@ -16,14 +15,40 @@ This repository is configured to automatically delete releases older than 30 day
 
 ## Variants
 
-Presently, only database sources under the [CC0](https://creativecommons.org/publicdomain/zero/1.0/) license are utilized and as such these are the only variants available. We presently have no intention of automatically building others, however the release naming scheme may allow this in the future without breaking existing URLs.
+These URLs will always point to the latest version of the database.
 
-### CC0
+### [CC0](https://creativecommons.org/publicdomain/zero/1.0/) License
 
-These URLS will always point to the latest version of the database.
-- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-cc0-v4.mmdb) (File name: `geoip-cc0-v4.mmdb ` Included data: `country`)
-- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-cc0-v6.mmdb) (File name: `geoip-cc0-v6.mmdb` Included data: `country`)
+#### Country
+
+These databases only include country information.
+
+- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-cc0-v4.mmdb) (File name: `geoip-cc0-v4.mmdb`)
+- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-cc0-v6.mmdb) (File name: `geoip-cc0-v6.mmdb`)
+
+### [PDDL](https://opendatacommons.org/licenses/pddl/1-0/) License
+
+#### ASN
+
+These databases only include ![ASN](https://www.arin.net/resources/guide/asn/) information.
+
+- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-pddl-asn-v4.mmdb) (File name: `geoip-pddl-asn-v4.mmdb`)
+- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-pddl-asn-v6.mmdb) (File name: `geoip-pddl-asn-v6.mmdb`)
+
+#### Country
+
+These databases only include country information.
+
+- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-pddl-country-v4.mmdb) (File name: `geoip-pddl-country-v4.mmdb`)
+- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-pddl-country-v6.mmdb) (File name: `geoip-pddl-country-v6.mmdb`)
+
+#### Country + ASN
+
+These databases include both ASN and country information.
+
+- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-pddl-country-asn-v4.mmdb) (File name: `geoip-pddl-country-asn-v4.mmdb`)
+- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/geoip-pddl-country-asn-v6.mmdb) (File name: `geoip-pddl-country-asn-v6.mmdb`)
 
 ## Licensing
 
-All code in this repository is licensed under the CC0 license. The [mmdbmeld](https://github.com/safing/mmdbmeld) and [ip-location-db](https://github.com/sapics/ip-location-db) projects each have their own licenses as do the original databases. Presently, only databases under the CC0 license are utilized.
+All code in this repository is licensed under the CC0 license. The [mmdbmeld](https://github.com/safing/mmdbmeld) and [ip-location-db](https://github.com/sapics/ip-location-db) projects each have their own licenses as do the original databases. Presently, we only build databases utilizing data that's under the [CC0](https://creativecommons.org/publicdomain/zero/1.0/) and [PDDL](https://opendatacommons.org/licenses/pddl/1-0/) licenses which should be noted both in their file name as well as the variants section of this document.
