@@ -118,6 +118,7 @@ jobs:
 
   run-tests:
     runs-on: ubuntu-latest
+    needs: build-database
     steps:
       - name: Download Databases
         uses: actions/download-artifact@v3
