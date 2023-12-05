@@ -14,14 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Databases
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: build
+          workflow: build.yml
 
       - name: Download Tools
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: tools
+          workflow: build.yml
 
       - run: |
           chmod +x mmdbcheck
