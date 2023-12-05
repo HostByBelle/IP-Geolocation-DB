@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: [run-tests]
+    branches: [main]
+    types: [completed]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Databases
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+
+      - name: Set some env variables
+        run: |
+          echo "RELEASE_DATE=$(date '+%D %T')" >> ${GITHUB_ENV}
+          echo "RELEASE_TAG=$(date '+%b.%d.%y.%H.%M.%S')" >> ${GITHUB_ENV}
+
+      - name: Create New Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            *.mmdb
+          name: ${{ env.RELEASE_DATE }}
+          tag_name: ${{ env.RELEASE_TAG }}
+          fail_on_unmatched_files: true
+          body: |
+            ## Built on: ${{ env.RELEASE_DATE }}
+            Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the varients available.
+
+      - name: Remove old releases
+        uses: dev-drprasad/delete-older-releases@v0.3.2
+        with:
+          keep_latest: 1
+          delete_tags: true
+          delete_expired_data: 7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

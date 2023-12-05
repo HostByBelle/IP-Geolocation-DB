@@ -1,6 +1,3 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
 name: Automated build
 
 on:
@@ -74,7 +71,6 @@ jobs:
         mkdir DBs
         mkdir build
         chmod +x mmdbmeld
-        chmod +x mmdbcheck
 
     # TODO: We are saving etags which can be utilized for proper caching of these databases. Ideally, we should implement a method to do so so that any DB that doesn't get updated doesn't need to be redownloaded daily.
     - name: Download DBs
@@ -119,39 +115,3 @@ jobs:
       with:
         name: build
         path: ./build
-
-  # Finally, we should make a new release and clean up any older ones as long as there's been a push to main or it's the scheduled run
-  release:
-    runs-on: ubuntu-latest
-    needs: ['build-database']
-    if: ${{ github.ref == 'refs/heads/main' || github.event_name == 'schedule' }}
-    steps:
-    - name: Download Databases
-      uses: actions/download-artifact@v3
-      with: 
-        name: build
-    
-    - name: Set some env variables
-      run: |
-        echo "RELEASE_DATE=$(date '+%D %T')" >> ${GITHUB_ENV}
-        echo "RELEASE_TAG=$(date '+%b.%d.%y.%H.%M.%S')" >> ${GITHUB_ENV}
-    
-    - name: Create New Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: |
-          *.mmdb
-        name: ${{ env.RELEASE_DATE }}
-        tag_name: ${{ env.RELEASE_TAG }}
-        fail_on_unmatched_files: true
-        body: |
-          ## Built on: ${{ env.RELEASE_DATE }}
-          Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the varients available.
-
-    - uses: dev-drprasad/delete-older-releases@v0.3.2
-      with:
-        keep_latest: 1
-        delete_tags: true
-        delete_expired_data: 7
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
