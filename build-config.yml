@@ -194,9 +194,9 @@ databases:
       "autonomous_system_organization": string
       "autonomous_system_number": uint32
     inputs:
-      - file: "DBs/geo-whois-asn-country-ipv4.csv"
-        fields: ["from", "to", "country.iso_code"]
       - file: "DBs/iptoasn-country-ipv4.csv"
+        fields: ["from", "to", "country.iso_code"]
+      - file: "DBs/geo-whois-asn-country-ipv4.csv"
         fields: ["from", "to", "country.iso_code"]
       - file: "DBs/iptoasn-asn-ipv4.csv"
         fields: ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
@@ -215,9 +215,9 @@ databases:
       "autonomous_system_organization": string
       "autonomous_system_number": uint32
     inputs:
-      - file: "DBs/geo-whois-asn-country-ipv6.csv"
-        fields: ["from", "to", "country.iso_code"]
       - file: "DBs/iptoasn-country-ipv6.csv"
+        fields: ["from", "to", "country.iso_code"]
+      - file: "DBs/geo-whois-asn-country-ipv6.csv"
         fields: ["from", "to", "country.iso_code"]
       - file: "DBs/iptoasn-asn-ipv6.csv"
         fields: ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
