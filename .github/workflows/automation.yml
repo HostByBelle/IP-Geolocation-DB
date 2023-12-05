@@ -1,0 +1,147 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Automated build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 0 * * *' # Daily at midnight UTC
+
+permissions:
+  contents: write
+
+jobs:
+  # First we need to compile the mmdbmeld project so we can build the DBs
+  build-tools:
+    runs-on: ubuntu-latest
+    env: 
+      GO_VERSION: '1.21.4'
+      MMDBMELD_TAG: 'v0.1.1'
+    steps:
+    - name: Check for Cached Tools Build
+      uses: actions/cache@v3
+      id: tools-cache
+      with:
+        path: ./tools
+        key: ${{ env.GO_VERSION }}-${{ env.MMDBMELD_TAG }}
+      
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      if: steps.tools-cache.outputs.cache-hit != 'true'
+      with:
+        go-version: ${{ env.GO_VERSION }}
+  
+    - name: Clone mmdbmeld
+      if: steps.tools-cache.outputs.cache-hit != 'true'
+      run: git clone -b ${{ env.MMDBMELD_TAG }} https://github.com/safing/mmdbmeld.git
+  
+    - name: Build mmdbmeld
+      if: steps.tools-cache.outputs.cache-hit != 'true'
+      working-directory: ./mmdbmeld
+      run: |
+        go build -C cmd/mmdbmeld
+        go build -C cmd/mmdbcheck
+  
+    - name: Move the Tools
+      if: steps.tools-cache.outputs.cache-hit != 'true'
+      run: |
+        mkdir ./tools
+        cp ./mmdbmeld/cmd/mmdbmeld/mmdbmeld ./mmdbmeld/cmd/mmdbcheck/mmdbcheck ./tools
+      
+    - name: Upload Tools To Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: tools
+        path: ./tools
+
+  # Now we can fetch the DBs and build them
+  build-database:
+    runs-on: ubuntu-latest
+    needs: ['build-tools']
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download Tools
+      uses: actions/download-artifact@v3
+      with: 
+        name: tools
+        
+    - run: |
+        mkdir DBs
+        mkdir build
+        chmod +x mmdbmeld
+        chmod +x mmdbcheck
+
+    - name: Fetch DB Cache
+      uses: actions/cache@v3
+      with:
+        key: DB
+        path: |
+          ./DBs
+
+    - name: Download DBs
+      working-directory: ./DBs
+      run: |
+        curl --show-error \
+          --etag-save geo-whois-asn-country-ipv4.csv.etag \
+          --etag-compare geo-whois-asn-country-ipv4.csv.etag \
+          --output geo-whois-asn-country-ipv4.csv \
+          "https://cdn.jsdelivr.net/npm/@ip-location-db/geo-whois-asn-country/geo-whois-asn-country-ipv4.csv"
+        curl --show-error \
+          --etag-save geo-whois-asn-country-ipv6.csv.etag \
+          --etag-compare geo-whois-asn-country-ipv6.csv.etag \
+          --output geo-whois-asn-country-ipv6.csv \
+          "https://cdn.jsdelivr.net/npm/@ip-location-db/geo-whois-asn-country/geo-whois-asn-country-ipv6.csv"
+
+    - name: Save DB Cache
+      uses: actions/cache/save@v3
+      with:
+        key: DB
+        path: |
+          ./DBs
+
+    - name: Build DBs
+      run: ./mmdbmeld build-config.yml
+
+    - name: Upload Build To Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: ./build
+
+  # Finally, we should make a new release and clean up any older ones as long as there's been a push to main or it's the scheduled run
+  release:
+    runs-on: ubuntu-latest
+    needs: ['build-database']
+    if: ${{ github.ref == 'refs/heads/main' }} || ${{ github.event_name == 'schedule' }}
+    steps:
+    - name: Download Databases
+      uses: actions/download-artifact@v3
+      with: 
+        name: build
+    
+    - name: Set some env variables
+      run: |
+        echo "RELEASE_DATE=$(date '+%D %T')" >> ${GITHUB_ENV}
+        echo "RELEASE_TAG=$(date '+%b.%d.%y.%H.%M.%S')" >> ${GITHUB_ENV}
+    
+    - name: Create New Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          *.mmdb
+        name: ${{ env.RELEASE_DATE }}
+        tag_name: ${{ env.RELEASE_TAG }}
+        fail_on_unmatched_files: true
+
+    - uses: dev-drprasad/delete-older-releases@v0.3.2
+      with:
+        keep_latest: 1
+        delete_tags: true
+        delete_expired_data: 30
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

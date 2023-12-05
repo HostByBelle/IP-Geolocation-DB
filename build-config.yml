@@ -1,0 +1,34 @@
+databases:
+  - name: "IPv4 - CC0"
+    mmdb:
+      ipVersion: 4
+      recordSize: 24 # One of 24, 28, 32. Start small, increase if it fails.
+    types: # Best to always use the same established keys as MaxMind.
+      "country.iso_code": string
+      "autonomous_system_organization": string
+      "autonomous_system_number": uint32
+    inputs: # Source data and their mapping.
+      - file: "DBs/geo-whois-asn-country-ipv4.csv"
+        fields: ["from", "to", "country.iso_code"]
+    output: build/geoip-cc0-v4.mmdb
+    optimize:
+      floatDecimals: 3
+      forceIPVersion: true
+      maxPrefix: 0
+
+  - name: "IPv6 - CC0"
+    mmdb:
+      ipVersion: 6
+      recordSize: 24 # One of 24, 28, 32. Start small, increase if it fails.
+    types: # Best to always use the same established keys as MaxMind.
+      "country.iso_code": string
+      "autonomous_system_organization": string
+      "autonomous_system_number": uint32
+    inputs: # Source data and their mapping.
+      - file: "DBs/geo-whois-asn-country-ipv6.csv"
+        fields: ["from", "to", "country.iso_code"]
+    output: build/geoip-cc0-v6.mmdb
+    optimize:
+      floatDecimals: 3
+      forceIPVersion: true
+      maxPrefix: 0
