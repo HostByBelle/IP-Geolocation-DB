@@ -49,6 +49,17 @@ These databases include both ASN and country information.
 - [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-asn-v4.mmdb) (File name: `pddl-country-asn-v4.mmdb`)
 - [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-asn-v6.mmdb) (File name: `pddl-country-asn-v6.mmdb`)
 
+### [CC0](https://creativecommons.org/publicdomain/zero/1.0/) + [PDDL](https://opendatacommons.org/licenses/pddl/1-0/) Licenses
+
+These databases merge data from both CC0 and PDDL licensed database sources.
+
+#### Country + ASN (Variant 1)
+
+Combines the county data from the CC0 databases with the ASN data from the PDDL database.
+
+- [IPv4](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-pddl-country-asn-v4-variant-1.mmdb) (File name: `cc0-pddl-country-asn-v4-variant-1.mmdb`)
+- [IPv6](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-pddl-country-asn-v6-variant-1.mmdb) (File name: `cc0-pddl-country-asn-v6-variant-1.mmdb`)
+
 ## Licensing
 
 All code in this repository is licensed under the CC0 license. The [mmdbmeld](https://github.com/safing/mmdbmeld) and [ip-location-db](https://github.com/sapics/ip-location-db) projects each have their own licenses as do the original databases. Presently, we only build databases utilizing data that's under the [CC0](https://creativecommons.org/publicdomain/zero/1.0/) and [PDDL](https://opendatacommons.org/licenses/pddl/1-0/) licenses which should be noted both in their file name as well as the variants section of this document.
