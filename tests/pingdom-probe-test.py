@@ -11,7 +11,10 @@ def parse_xml(xml_file, geoip_db, ip_type):
 
     for item in root.findall('.//item'):
         # First we need to extract the needed data from Pingdom's feed
-        ip_address = item.find(f'pingdom:{ip_type}', {'pingdom': 'http://www.pingdom.com/ns/PingdomRSSNamespace'}).text
+        ip_address_element = item.find(f'pingdom:{ip_type}', {'pingdom': 'http://www.pingdom.com/ns/PingdomRSSNamespace'})
+        if(ip_address_element is None):
+            continue
+        ip_address= ip_address_element.text
         country_element = item.find('pingdom:country', {'pingdom': 'http://www.pingdom.com/ns/PingdomRSSNamespace'})
         country_code = country_element.attrib.get('code', '')
         #city = item.find('pingdom:country', {'pingdom': 'http://www.pingdom.com/ns/PingdomRSSNamespace'}).text

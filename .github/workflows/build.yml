@@ -48,7 +48,7 @@ jobs:
         if: steps.tools-cache.outputs.cache-hit != 'true'
         run: |
           mkdir ./tools
-          cp ./mmdbmeld/cmd/mmdbmeld/mmdbmeld ./mmdbmeld/cmd/mmdbcheck/mmdbcheck ./tools
+          cp ./mmdbmeld/cmd/mmdbmeld/mmdbmeld ./mmdbmeld/cmd/mmdbcheck/mmdbcheck ./mmdbmeld/cmd/mmdbcheck/mmdbquery ./tools
 
       - name: Upload Tools To Artifacts
         uses: actions/upload-artifact@v3
