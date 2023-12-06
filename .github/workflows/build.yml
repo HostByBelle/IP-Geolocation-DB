@@ -180,7 +180,7 @@ jobs:
       - name: Start the results file
         run: |
           echo -e "# Built on: ${{ env.RELEASE_DATE }}\n" > results.md
-          echo -e "Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the variantsavailable.\n" >> results.md
+          echo -e "Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the variants available.\n" >> results.md
           echo -e "## Testing Results\n" >> results.md
 
       # Cache key is valid for 1 day & is to make repeat tests more efficient
@@ -225,7 +225,7 @@ jobs:
           echo -e "| Database | Result |" >> results.md
           echo -e "|----------|--------|" >> results.md
           find . -type f -name "*v6*.mmdb" -print | while read -r file; do
-            result=$(python ./tests/pingdom-probe-test.py ./tests/feed.xml $file ip6)
+            result=$(python ./tests/pingdom-probe-test.py ./tests/feed.xml $file ipv6)
             echo "| \`$file\` | $result |"  >> results.md
           done
 
