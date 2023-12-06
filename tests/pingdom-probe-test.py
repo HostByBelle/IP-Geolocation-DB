@@ -21,7 +21,7 @@ def parse_xml(xml_file, geoip_db, ip_type):
         location_data = get_location_data(geoip_db, ip_address)
 
         # And finally, valdiate that they are correct
-        if(country_code and location_data['country']):
+        if(country_code and location_data and location_data['country']):
             total+=1
             if(country_code != location_data['country']):
                 # TODO: Do I want to record the addresses that were wrong?
@@ -43,7 +43,8 @@ def get_location_data(geoip_db, ip_address):
                 'city': location_data.get('city', {}).get('names', {}).get('en', ''),
             }
         except Exception as e:
-            print(f"- Error retrieving location data for IP {ip_address}: {e}")
+            #TODO: Cleanly handle cases where the DB does not contain the info we are looking for
+            #print(f"- Error retrieving location data for IP {ip_address}: {e}")
             return None
 
 def main():

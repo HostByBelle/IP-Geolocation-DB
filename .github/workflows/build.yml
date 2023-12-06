@@ -24,7 +24,7 @@ jobs:
         id: tools-cache
         with:
           path: ./tools
-          key: go-v${{ env.GO_VERSION }}-mmdbmeld-v${{ env.MMDBMELD_TAG }}
+          key: go-v${{ env.GO_VERSION }}-mmdbmeld-${{ env.MMDBMELD_TAG }}
 
       - name: Set up Go
         uses: actions/setup-go@v4
