@@ -38,7 +38,7 @@ def parse_xml(xml_file, geoip_db, ip_type):
         coverage = round(totalCovered / total * 100, 2)
         print(f"- Database covered {totalCovered}/{total} of tested IP addresses ({coverage}%). It got {totalWrong} wrong for a overall accuracy of {accuracy}%")
     else:
-        print(f"- This database does not contain the neded info to perform the Pingdom test")
+        print(f"- This database does not contain the needed info to perform the Pingdom test")
 
 def get_location_data(geoip_db, ip_address):
     with maxminddb.open_database(geoip_db) as reader:
