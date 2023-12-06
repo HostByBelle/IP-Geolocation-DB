@@ -1,5 +1,9 @@
-
 # IP Geolocation DB
+
+[![Release](https://github.com/HostByBelle/IP-Geolocation-DB/actions/workflows/release.yml/badge.svg)](https://github.com/HostByBelle/IP-Geolocation-DB/actions/workflows/release.yml)
+[![Build & Test](https://github.com/HostByBelle/IP-Geolocation-DB/actions/workflows/build.yml/badge.svg)](https://github.com/HostByBelle/IP-Geolocation-DB/actions/workflows/build.yml)
+![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/HostByBelle/IP-Geolocation-DB)
+![GitHub all releases](https://img.shields.io/github/downloads/HostByBelle/IP-Geolocation-DB/total?label=Weekly%20downloads)
 
 This repository automatically builds IP geolocation databases in the `.mmdb` database format for both IPv4 and IPv6.
 Building is handled via the [mmdbmeld](https://github.com/safing/mmdbmeld) golang package and the database sources originate from [ip-location-db](https://github.com/sapics/ip-location-db).
