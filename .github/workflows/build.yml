@@ -195,11 +195,11 @@ jobs:
       - name: Test IPv4 DBs
         run: |
           find . -type f -name "*v4*.mmdb" -print | while read -r file; do
-            python ./tests/pingdom-probe-test.py ./feed.xml $file ip
+            python ./tests/pingdom-probe-test.py ./tests/feed.xml $file ip
           done
 
       - name: Test IPv4 DBs
         run: |
           find . -type f -name "*v6*.mmdb" -print | while read -r file; do
-            python ./tests/pingdom-probe-test.py ./feed.xml $file ipv6
+            python ./tests/pingdom-probe-test.py ./tests/feed.xml $file ipv6
           done
