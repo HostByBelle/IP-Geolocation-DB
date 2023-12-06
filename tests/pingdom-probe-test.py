@@ -7,6 +7,7 @@ def parse_xml(xml_file, geoip_db, ip_type):
     root = tree.getroot()
     
     total = 0
+    totalCovered = 0
     totalWrong = 0
 
     for item in root.findall('.//item'):
@@ -19,21 +20,23 @@ def parse_xml(xml_file, geoip_db, ip_type):
         country_code = country_element.attrib.get('code', '')
         #city = item.find('pingdom:country', {'pingdom': 'http://www.pingdom.com/ns/PingdomRSSNamespace'}).text
 
+        total+=1
 
         # Then pull the associated data from the database
         location_data = get_location_data(geoip_db, ip_address)
 
         # And finally, valdiate that they are correct
         if(country_code and location_data and location_data['country']):
-            total+=1
+            totalCovered+=1
             if(country_code != location_data['country']):
                 # TODO: Do I want to record the addresses that were wrong?
                 #print(f"{ip_address} Should be in {country_code}, but was instead responded as {location_data['country']}")
                 totalWrong+=1
 
-    if(total):
-        accuracy = 100 - round(totalWrong / total * 100, 2)
-        print(f"- Out of {total} Pingdom IP addreses tested, this database failed {totalWrong} for a total accuracy of {accuracy}%")
+    if(total and totalCovered):
+        accuracy = 100 - round(totalWrong / totalCovered * 100, 2)
+        coverage = round(totalCovered / total * 100, 2)
+        print(f"- Database covered {totalCovered}/{total} of tested IP addresses ({coverage}%). It got {totalWrong} for a total accuracy of {accuracy}%")
     else:
         print(f"- This database does not contain the neded info to perform the Pingdom test")
 
