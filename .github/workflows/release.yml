@@ -41,7 +41,7 @@ jobs:
           fail_on_unmatched_files: true
           body: |
             ## Built on: ${{ env.RELEASE_DATE }}
-            Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the varients available.
+            Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the variantsavailable.
           body_path: results.md
 
       - name: Remove old releases

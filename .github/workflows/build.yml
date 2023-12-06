@@ -172,7 +172,7 @@ jobs:
       - name: Start the results file
         run: |
           echo "#1 Built on: ${{ env.RELEASE_DATE }}" > results.md
-          echo "Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the varients available." >> results.md
+          echo "Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the variantsavailable." >> results.md
           echo "## Testing Results" >> results.md
 
       - name: Cache Pingdom Probe Data
