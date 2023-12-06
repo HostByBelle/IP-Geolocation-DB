@@ -215,8 +215,8 @@ jobs:
           echo -e "| Database | Result |" >> results.md
           echo -e "|----------|--------|" >> results.md
           find . -type f -name "*v4*.mmdb" -print | while read -r file; do
-            result=$(python ./tests/pingdom-probe-test.py ./tests/feed.xml "$file" ip)
-            echo "| `$file` | $result |"  >> results.md
+            result=$(python ./tests/pingdom-probe-test.py ./tests/feed.xml $file ip)
+            echo "| \`$file\` | $result |"  >> results.md
           done
 
       - name: Test IPv6 DBs
@@ -225,8 +225,8 @@ jobs:
           echo -e "| Database | Result |" >> results.md
           echo -e "|----------|--------|" >> results.md
           find . -type f -name "*v6*.mmdb" -print | while read -r file; do
-            result=$(python ./tests/pingdom-probe-test.py ./tests/feed.xml "$file" ip6)
-            echo "| `$file` | $result |"  >> results.md
+            result=$(python ./tests/pingdom-probe-test.py ./tests/feed.xml $file ip6)
+            echo "| \`$file\` | $result |"  >> results.md
           done
 
       - name: Upload Results
