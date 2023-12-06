@@ -181,6 +181,7 @@ jobs:
         run: |
           curl --show-error \
             --output feed.xml \
+            --location
             "https://www.pingdom.com/rss/probe_servers.xml"
 
       - name: Setup Python
