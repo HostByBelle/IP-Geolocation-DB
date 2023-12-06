@@ -167,6 +167,10 @@ jobs:
       - run: |
           chmod +x mmdbcheck
           echo "NOW=$(date '+%D')" >> ${GITHUB_ENV}
+          echo "RELEASE_DATE=$(date '+%D %T')" >> ${GITHUB_ENV}
+          echo "## Built on: ${{ env.RELEASE_DATE }}" > results.md
+          echo "Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the varients available." >> results.md
+          echo "### Testing Results" >> results.md
 
       - name: Cache Pingdom Probe Data
         uses: actions/cache@v3
@@ -193,17 +197,23 @@ jobs:
         working-directory: ./tests
         run: pip install -r requirements.txt
 
-      - name: TEST Display contents of the feed file.
-        run:  cat ./tests/feed.xml
-
       - name: Test IPv4 DBs
         run: |
+          echo "#### IPv4 Pingdom Tests:" >> results.md
           find . -type f -name "*v4*.mmdb" -print | while read -r file; do
-            python ./tests/pingdom-probe-test.py ./tests/feed.xml $file ip
+          echo "**$file**" >> results.md
+            python ./tests/pingdom-probe-test.py ./tests/feed.xml $file ip >> results.md
           done
 
       - name: Test IPv4 DBs
         run: |
+         echo "#### IPv6 Pingdom Tests:" >> results.md
           find . -type f -name "*v6*.mmdb" -print | while read -r file; do
-            python ./tests/pingdom-probe-test.py ./tests/feed.xml $file ipv6
+            python ./tests/pingdom-probe-test.py ./tests/feed.xml $file ipv6 >> results.md
           done
+
+      - name: Upload Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: results
+          path: ./results.md
