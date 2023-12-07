@@ -1,6 +1,11 @@
 import argparse
 import re
 import json
+import ipaddress
+
+def get_range(address):
+    ip_address = ipaddress.ip_address(address)
+    return ipaddress.ip_network(f"{ip_address}/{ip_address.max_prefixlen}", strict=False)
 
 def extract_wk(hostname):
     match = re.match(r'^([a-zA-Z]+[0-9]+).*$', hostname)
@@ -80,7 +85,7 @@ def parse(file_path, json_file):
                     }
                     if wk in wk_mapping:
                         data_list.append({
-                            'ip_range': ip_address + '/32',
+                            'ip_range': get_range(ip_address),
                             **wk_mapping[wk]
                         })
 

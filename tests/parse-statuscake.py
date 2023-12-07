@@ -1,5 +1,10 @@
 import argparse
 import json
+import ipaddress
+
+def get_range(address):
+    ip_address = ipaddress.ip_address(address)
+    return ipaddress.ip_network(f"{ip_address}/{ip_address.max_prefixlen}", strict=False)
 
 def parse(updown_data, json_file, ipver):
     data_list = []
@@ -17,7 +22,7 @@ def parse(updown_data, json_file, ipver):
             if not updown_nodes[node][ipver]:
                 continue
             data_list.append({
-                'ip_range': updown_nodes[node][ipver] + '/32',
+                'ip_range': get_range(updown_nodes[node][ipver]),
                 'country_code': updown_nodes[node]['countryiso'],
             })
 

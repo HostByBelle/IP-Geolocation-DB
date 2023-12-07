@@ -1,7 +1,10 @@
 import argparse
 import json
+import ipaddress
 
-#def parse(updown_data, json_file):
+def get_range(address):
+    ip_address = ipaddress.ip_address(address)
+    return ipaddress.ip_network(f"{ip_address}/{ip_address.max_prefixlen}", strict=False)
 def parse(updown_data, json_file, ipver):
     data_list = []
 
@@ -16,7 +19,7 @@ def parse(updown_data, json_file, ipver):
         updown_nodes = json.load(file)
         for node in updown_nodes:
             data_list.append({
-                'ip_range': updown_nodes[node][ipver] + '/32',
+                'ip_range': get_range(updown_nodes[node][ipver]),
                 'country_code': updown_nodes[node]['country_code'],
                 'city': updown_nodes[node]['city'],
                 'lat': updown_nodes[node]['lat'],

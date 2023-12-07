@@ -45,7 +45,7 @@ def perform_test(json_file, geoip_db):
     with maxminddb.open_database(geoip_db) as reader:
         for data in data_list:
             country_code = data['country_code']
-            ip_list = get_ip_list(data['ip_address'])
+            ip_list = get_ip_list(data['ip_range'])
             for ip_address in ip_list:
                 total += 1
                 location_data = get_location_data(reader, ip_address)
