@@ -200,6 +200,7 @@ jobs:
           curl --show-error --output hetrix.txt --location "https://hetrixtools.com/resources/uptime-monitor-ips.txt"
           curl --show-error --output updown.json --location "https://updown.io/api/nodes"
           curl --show-error --output statuscake.json --location "https://app.statuscake.com/Workfloor/Locations.php?format=json"
+          curl --show-error --output aws-ranges.json --location "https://ip-ranges.amazonaws.com/ip-ranges.json"
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -219,6 +220,8 @@ jobs:
           python ./tests/parse-updown.py ./data/updown.json ./tests/IPv6.json ip6
           python ./tests/parse-statuscake.py ./data/statuscake.json ./tests/IPv4.json ip
           python ./tests/parse-statuscake.py ./data/statuscake.json ./tests/IPv6.json ipv6
+          python ./tests/parse-aws.py ./data/aws-ranges.json ./tests/IPv4.json ip
+          python ./tests/parse-aws.py ./data/aws-ranges.json ./tests/IPv6.json ipv6
 
       - name: Test IPv4 DBs
         run: |
