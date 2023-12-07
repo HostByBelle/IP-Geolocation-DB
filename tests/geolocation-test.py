@@ -27,13 +27,11 @@ def convert_to_2_letter_code(three_letter_code):
         return None
 
 def get_ip_list(cidr):
-    ip_addresses = []
     network = ipaddress.ip_network(cidr, strict=False)
-
-    for ip_address in network:
-        ip_addresses.append(str(ip_address))
-    
-    return ip_addresses
+    size = network.num_addresses
+    step_size = max(1, size // 15000)
+    for i in range(0, size, step_size):
+        yield network[i]
 
 def perform_test(json_file, geoip_db):
     with open(json_file, 'r', encoding='utf-8') as json_file:
@@ -48,14 +46,8 @@ def perform_test(json_file, geoip_db):
             country_code = data['country_code']
             ip_list = get_ip_list(data['ip_range'])
             
-            total_ips = len(ip_list)
-            # Calculate the step size to evenly distribute the testing
-            step_size = max(1, total_ips // 5000)
-            
-            for i in range(0, total_ips, step_size):
-                ip_address = ip_list[i]
+            for ip_address in ip_list:
                 total += 1
-                
                 location_data = get_location_data(reader, ip_address)
                 
                 if country_code and location_data and location_data.get('country'):
@@ -73,7 +65,7 @@ def perform_test(json_file, geoip_db):
     if total and total_covered:
         accuracy = 100 - round(total_wrong / total_covered * 100, 2)
         coverage = round(total_covered / total * 100, 2)
-        print(f"Covered {total_covered}/{total} ({coverage}%) IP addresses. Got {total_wrong} wrong for an overall accuracy of {accuracy}%")
+        print(f"Covered {total_covered:,}/{total:,} ({coverage}%) IP addresses. Got {total_wrong:,} wrong for an overall accuracy of {accuracy}%")
     else:
         print("Does not contain the needed info to perform this test")
 
