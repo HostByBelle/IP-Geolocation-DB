@@ -219,7 +219,7 @@ jobs:
           python ./tests/parse-statuscake.py ./data/statuscake.json ./tests/IPv6.json ipv6
           python ./tests/parse-aws.py ./data/aws-ranges.json ./tests/IPv4.json ip
           python ./tests/parse-aws.py ./data/aws-ranges.json ./tests/IPv6.json ipv6
-          python ./tests/parse-aws.py ./data/oracle-ranges.json ./tests/IPv4.json
+          python ./tests/parse-oracle.py ./data/oracle-ranges.json ./tests/IPv4.json
 
       - name: Test IPv4 DBs
         run: |
