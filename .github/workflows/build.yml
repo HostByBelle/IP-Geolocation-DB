@@ -17,14 +17,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GO_VERSION: 1.21.4
-      MMDBMELD_TAG: v0.2.0
+      MMDBMELD_TAG: v0.3.0
     steps:
       - name: Check for Cached Tools Build
         uses: actions/cache@v3
         id: tools-cache
         with:
           path: ./tools
-          key: go-v${{ env.GO_VERSION }}-mmdbmeld-v${{ env.MMDBMELD_TAG }}
+          key: go-v${{ env.GO_VERSION }}-mmdbmeld-${{ env.MMDBMELD_TAG }}
 
       - name: Set up Go
         uses: actions/setup-go@v4
@@ -42,12 +42,13 @@ jobs:
         run: |
           go build -C cmd/mmdbmeld
           go build -C cmd/mmdbcheck
+          go build -C cmd/mmdbquery
 
       - name: Move the Tools
         if: steps.tools-cache.outputs.cache-hit != 'true'
         run: |
           mkdir ./tools
-          cp ./mmdbmeld/cmd/mmdbmeld/mmdbmeld ./mmdbmeld/cmd/mmdbcheck/mmdbcheck ./tools
+          cp ./mmdbmeld/cmd/mmdbmeld/mmdbmeld ./mmdbmeld/cmd/mmdbcheck/mmdbcheck ./mmdbmeld/cmd/mmdbquery/mmdbquery ./tools
 
       - name: Upload Tools To Artifacts
         uses: actions/upload-artifact@v3
@@ -71,8 +72,16 @@ jobs:
           mkdir DBs
           mkdir build
           chmod +x mmdbmeld
+          echo "NOW=$(date '+%D')" >> ${GITHUB_ENV}
 
-      # TODO: We are saving etags which can be utilized for proper caching of these databases. Ideally, we should implement a method to do so so that any DB that doesn't get updated doesn't need to be redownloaded daily.
+      # Cache key is valid for 1 day & is to make repeat tests more efficient
+      - name: Cache DBs
+        uses: actions/cache@v3
+        with:
+          key: DBs-${{ env.NOW }}
+          path: ./DBs
+
+      # TODO: Can we do a better job of caching this?
       - name: Download DBs
         working-directory: ./DBs
         run: |
@@ -145,3 +154,88 @@ jobs:
           find . -type f -name "*v6*.mmdb" -print | while read -r file; do
             ./mmdbcheck all $file
           done
+
+  # This test pulls in the Pingdom probe server data which includes their IP addresses and location and utilizes that to validate the results of the databases.
+  run-test-pingdom-probes:
+    runs-on: ubuntu-latest
+    needs: build-database
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Databases
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+
+      - name: Download Tools
+        uses: actions/download-artifact@v3
+        with:
+          name: tools
+
+      - run: |
+          chmod +x mmdbcheck
+          echo "NOW=$(date '+%D')" >> ${GITHUB_ENV}
+          echo "RELEASE_DATE=$(date '+%D %T')" >> ${GITHUB_ENV}
+
+      - name: Start the results file
+        run: |
+          echo -e "# Built on: ${{ env.RELEASE_DATE }}\n" > results.md
+          echo -e "Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the variants available.\n" >> results.md
+          echo -e "## Testing Results\n" >> results.md
+
+      # Cache key is valid for 1 day & is to make repeat tests more efficient
+      - name: Cache Pingdom Probe Data
+        uses: actions/cache@v3
+        id: probe-cache
+        with:
+          path: ./tests/feed.xml
+          key: pingdom-probe-${{ env.NOW }}
+
+      - name: Download Pingdom Probe Data
+        if: steps.probe-cache.outputs.cache-hit != 'true'
+        working-directory: ./tests
+        run: |
+          curl --show-error \
+            --output feed.xml \
+            --location \
+            "https://www.pingdom.com/rss/probe_servers.xml"
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Install Python Requirements
+        working-directory: ./tests
+        run: pip install -r requirements.txt
+
+      - name: Parse Pingdom Data
+        run: |
+          python ./tests/parse-pingdom.py ./tests/feed.xml ip ./tests/IPv4.json
+          python ./tests/parse-pingdom.py ./tests/feed.xml ipv6 ./tests/IPv6.json
+
+      - name: Test IPv4 DBs
+        run: |
+          echo -e "### IPv4 Geolocation (Country) Tests\n" >> results.md
+          echo -e "| Database | Result |" >> results.md
+          echo -e "|----------|--------|" >> results.md
+          find . -type f -name "*v4*.mmdb" -print | while read -r file; do
+            result=$(python ./tests/geolocation-test.py ./tests/IPv4.json $file)
+            echo "| \`$file\` | $result |"  >> results.md
+          done
+
+      - name: Test IPv6 DBs
+        run: |
+          echo -e "\n### IPv6 Geolocation (Country) Tests\n" >> results.md
+          echo -e "| Database | Result |" >> results.md
+          echo -e "|----------|--------|" >> results.md
+          find . -type f -name "*v6*.mmdb" -print | while read -r file; do
+            result=$(python ./tests/geolocation-test.py ./tests/IPv6.json $file)
+            echo "| \`$file\` | $result |"  >> results.md
+          done
+
+      - name: Upload Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: results
+          path: ./results.md

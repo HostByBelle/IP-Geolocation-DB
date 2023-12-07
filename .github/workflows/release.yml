@@ -20,6 +20,12 @@ jobs:
           name: build
           workflow: build.yml
 
+      - name: Download Results
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: results
+          workflow: build.yml
+
       - name: Set some env variables
         run: |
           echo "RELEASE_DATE=$(date '+%D %T')" >> ${GITHUB_ENV}
@@ -35,7 +41,8 @@ jobs:
           fail_on_unmatched_files: true
           body: |
             ## Built on: ${{ env.RELEASE_DATE }}
-            Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the varients available.
+            Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the variants available.
+          body_path: results.md
 
       - name: Remove old releases
         uses: dev-drprasad/delete-older-releases@v0.3.2
