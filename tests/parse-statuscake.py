@@ -14,6 +14,8 @@ def parse(updown_data, json_file, ipver):
     with open(updown_data, 'r') as file:
         updown_nodes = json.load(file)
         for node in updown_nodes:
+            if not updown_nodes[node][ipver]:
+                continue
             data_list.append({
                 'ip_address': updown_nodes[node][ipver],
                 'country_code': updown_nodes[node]['countryiso'],
