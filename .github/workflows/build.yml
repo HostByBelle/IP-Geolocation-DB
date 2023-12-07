@@ -191,6 +191,13 @@ jobs:
           path: ./tests/feed.xml
           key: pingdom-probe-${{ env.NOW }}
 
+      - name: Cache Hetrix Data
+        uses: actions/cache@v3
+        id: hetrix-cache
+        with:
+          path: ./tests/hetrix.txt
+          key: pingdom-probe-${{ env.NOW }}
+
       - name: Download Pingdom Probe Data
         if: steps.probe-cache.outputs.cache-hit != 'true'
         working-directory: ./tests
@@ -199,6 +206,15 @@ jobs:
             --output feed.xml \
             --location \
             "https://www.pingdom.com/rss/probe_servers.xml"
+
+      - name: Download Hetrix Data
+        if: steps.hetrix-cache.outputs.cache-hit != 'true'
+        working-directory: ./tests
+        run: |
+          curl --show-error \
+            --output hetrix.txt \
+            --location \
+            "https://hetrixtools.com/resources/uptime-monitor-ips.txt"
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -209,10 +225,11 @@ jobs:
         working-directory: ./tests
         run: pip install -r requirements.txt
 
-      - name: Parse Pingdom Data
+      - name: Parse Data
         run: |
           python ./tests/parse-pingdom.py ./tests/feed.xml ip ./tests/IPv4.json
           python ./tests/parse-pingdom.py ./tests/feed.xml ipv6 ./tests/IPv6.json
+          python ./tests/parse-hetrix.py ./tests/hetrix.txt ./tests/IPv4.json
 
       - name: Test IPv4 DBs
         run: |
