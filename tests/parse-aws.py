@@ -1,10 +1,10 @@
 import argparse
 import json
-from progressbar import progressbar
 
 # Manually gathered from https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html
+# It's somewhat incomplete, though so some info was gathered via google and educated guesses.
 region_info = {
-    'us-east-2': {
+    'us-east-1': {
         'country_code': 'US',
     },
     'us-east-2': {
@@ -94,6 +94,18 @@ region_info = {
     'us-gov-west-1': {
         'country_code': 'US',
     },
+    'ca-west-1': {
+        'country_code': 'CA',
+    },
+    'cn-northwest-1': {
+        'country_code': 'CN',
+    },
+    'cn-north-1': {
+        'country_code': 'CN',
+    },
+    'ap-southeast-5': { #https://www.netify.ai/resources/networks/amazon-aws/pop/ap-southeast-5
+        'country_code': 'CN',
+    },
 }
 
 def parse(updown_data, json_file, ipver):
@@ -108,7 +120,7 @@ def parse(updown_data, json_file, ipver):
 
     with open(updown_data, 'r') as file:
         aws_ips = json.load(file)
-        for prefix in progressbar(aws_ips['prefixes']):
+        for prefix in aws_ips['prefixes']:
             prefix_key = ipver + '_prefix'
             if(prefix[prefix_key]):
                 if prefix['region'] in region_info:
@@ -117,7 +129,8 @@ def parse(updown_data, json_file, ipver):
                         **region_info[prefix['region']]
                     })
                 else:
-                    print(f"{prefix['region']} is not yet mapped")
+                    if prefix['region'] != 'GLOBAL':
+                        print(f"{prefix['region']} is not yet mapped")
 
         # Write the updated data back to the JSON file
         with open(json_file, 'w', encoding='utf-8') as json_file:
