@@ -176,6 +176,7 @@ jobs:
           chmod +x mmdbcheck
           echo "NOW=$(date '+%D')" >> ${GITHUB_ENV}
           echo "RELEASE_DATE=$(date '+%D %T')" >> ${GITHUB_ENV}
+          mkdir data
 
       - name: Start the results file
         run: |
