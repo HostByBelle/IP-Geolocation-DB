@@ -209,23 +209,28 @@ jobs:
         working-directory: ./tests
         run: pip install -r requirements.txt
 
+      - name: Parse Pingdom Data
+        run: |
+          python ./tests/parse-pingdom.py ./tests/feed.xml ip ./tests/IPv4.json
+          python ./tests/parse-pingdom.py ./tests/feed.xml ipv6 ./tests/IPv6.json
+
       - name: Test IPv4 DBs
         run: |
-          echo -e "### IPv4 Tests\n" >> results.md
+          echo -e "### IPv4 Geolocation (Country) Tests\n" >> results.md
           echo -e "| Database | Result |" >> results.md
           echo -e "|----------|--------|" >> results.md
           find . -type f -name "*v4*.mmdb" -print | while read -r file; do
-            result=$(python ./tests/pingdom-probe-test.py ./tests/feed.xml $file ip)
+            result=$(python ./tests/geolocation-test.py ./tests/IPv4.json $file)
             echo "| \`$file\` | $result |"  >> results.md
           done
 
       - name: Test IPv6 DBs
         run: |
-          echo -e "### IPv6 Tests\n" >> results.md
+          echo -e "### IPv6 Geolocation (Country) Tests\n" >> results.md
           echo -e "| Database | Result |" >> results.md
           echo -e "|----------|--------|" >> results.md
           find . -type f -name "*v6*.mmdb" -print | while read -r file; do
-            result=$(python ./tests/pingdom-probe-test.py ./tests/feed.xml $file ipv6)
+            result=$(python ./tests/geolocation-test.py ./tests/IPv6.json $file)
             echo "| \`$file\` | $result |"  >> results.md
           done
 
