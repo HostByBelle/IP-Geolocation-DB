@@ -32,7 +32,7 @@ def parse_xml(xml_file, ip_type, json_file):
         city = item.find('pingdom:city', {'pingdom': PINGDOM_NAMESPACE}).text
 
         data_list.append({
-            'ip_address': ip_address,
+            'ip_range': ip_address + '/32',
             'country_code': country_code,
             'city': city
         })

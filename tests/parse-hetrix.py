@@ -80,7 +80,7 @@ def parse(file_path, json_file):
                     }
                     if wk in wk_mapping:
                         data_list.append({
-                            'ip_address': ip_address,
+                            'ip_range': ip_address + '/32',
                             **wk_mapping[wk]
                         })
 
