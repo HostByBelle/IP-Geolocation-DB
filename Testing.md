@@ -12,6 +12,9 @@ Best case scenario are where companies self-publish a list of their IP address a
 - [Hetrix Monitoring IPs](https://docs.hetrixtools.com/uptime-monitoring-ip-addresses/)
   - IP address types: `IPv4`
   - Data available: `Country code`, `City`
+- [Updown.io Monitoring IPs](https://updown.io/api/nodes)
+  - IP address types: `IPv4`, `IPv6`
+  - Data available: `Country code`, `City`, `Latitude`, `Longitude`
 
 ## Automated testing
 

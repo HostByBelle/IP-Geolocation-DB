@@ -184,53 +184,20 @@ jobs:
           echo -e "## Testing Results\n" >> results.md
 
       # Cache key is valid for 1 day & is to make repeat tests more efficient
-      - name: Cache Pingdom Probe Data
+      - name: Cache Testing Data
         uses: actions/cache@v3
-        id: probe-cache
+        id: cache-test-data
         with:
-          path: ./tests/feed.xml
-          key: pingdom-probe-${{ env.NOW }}
-
-      - name: Cache Hetrix Data
-        uses: actions/cache@v3
-        id: hetrix-cache
-        with:
-          path: ./tests/hetrix.txt
-          key: hetrix-probe-${{ env.NOW }}
-
-      - name: Cache Hetrix Data
-        uses: actions/cache@v3
-        id: updown-cache
-        with:
-          path: ./tests/updown.json
-          key: updown-probe-${{ env.NOW }}
+          path: ./data
+          key: testing-data-${{ env.NOW }}
 
       - name: Download Pingdom Probe Data
-        if: steps.probe-cache.outputs.cache-hit != 'true'
-        working-directory: ./tests
+        if: steps.cache-test-data.outputs.cache-hit != 'true'
+        working-directory: ./data
         run: |
-          curl --show-error \
-            --output feed.xml \
-            --location \
-            "https://www.pingdom.com/rss/probe_servers.xml"
-
-      - name: Download Hetrix Data
-        if: steps.hetrix-cache.outputs.cache-hit != 'true'
-        working-directory: ./tests
-        run: |
-          curl --show-error \
-            --output hetrix.txt \
-            --location \
-            "https://hetrixtools.com/resources/uptime-monitor-ips.txt"
-
-      - name: Download Updown Data
-        if: steps.updown-cache.outputs.cache-hit != 'true'
-        working-directory: ./tests
-        run: |
-          curl --show-error \
-            --output updown.json \
-            --location \
-            "https://updown.io/api/nodes"
+          curl --show-error --output feed.xml --location "https://www.pingdom.com/rss/probe_servers.xml"
+          curl --show-error --output hetrix.txt --location "https://hetrixtools.com/resources/uptime-monitor-ips.txt"
+          curl --show-error --output updown.json --location "https://updown.io/api/nodes"  
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -243,11 +210,11 @@ jobs:
 
       - name: Parse Data
         run: |
-          python ./tests/parse-pingdom.py ./tests/feed.xml ip ./tests/IPv4.json
-          python ./tests/parse-pingdom.py ./tests/feed.xml ipv6 ./tests/IPv6.json
-          python ./tests/parse-hetrix.py ./tests/hetrix.txt ./tests/IPv4.json
-          python ./tests/parse-updown.py ./tests/updown.json ./tests/IPv4.json ip
-          python ./tests/parse-updown.py ./tests/updown.json ./tests/IPv6.json ip6
+          python ./tests/parse-pingdom.py ./data/feed.xml ./tests/IPv4.json ip
+          python ./tests/parse-pingdom.py ./data/feed.xml ./tests/IPv6.json ipv6
+          python ./tests/parse-hetrix.py ./data/hetrix.txt ./tests/IPv4.json
+          python ./tests/parse-updown.py ./data/updown.json ./tests/IPv4.json ip
+          python ./tests/parse-updown.py ./data/updown.json ./tests/IPv6.json ip6
 
       - name: Test IPv4 DBs
         run: |
