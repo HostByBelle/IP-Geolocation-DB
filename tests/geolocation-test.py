@@ -3,7 +3,7 @@ import json
 import maxminddb
 import pycountry
 import ipaddress
-from progressbar import progressbar
+import time
 
 def get_location_data(reader, ip_address):
     try:
@@ -35,6 +35,8 @@ def get_ip_list(cidr):
         yield network[i]
 
 def perform_test(json_file, geoip_db):
+    start_time = time.time()
+
     with open(json_file, 'r', encoding='utf-8') as json_file:
         data_list = json.load(json_file)
 
@@ -63,10 +65,13 @@ def perform_test(json_file, geoip_db):
                     if country_code.lower() != location_data['country'].lower():
                         total_wrong += 1
 
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+
     if total and total_covered:
         accuracy = 100 - round(total_wrong / total_covered * 100, 2)
         coverage = round(total_covered / total * 100, 2)
-        print(f"Covered {total_covered:,}/{total:,} ({coverage}%) IP addresses. Got {total_wrong:,} wrong for an overall accuracy of {accuracy}%")
+        print(f"Covered {total_covered:,}/{total:,} ({coverage}%) IP addresses. Got {total_wrong:,} wrong for an overall accuracy of {accuracy}%. Took {elapsed_time:.2f} seconds")
     else:
         print("Does not contain the needed info to perform this test")
 
