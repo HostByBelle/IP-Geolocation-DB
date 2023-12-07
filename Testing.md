@@ -8,7 +8,10 @@ Best case scenario are where companies self-publish a list of their IP address a
 
 - [Pingdom probe server data](https://www.pingdom.com/rss/probe_servers.xml)
   - IP address types: `IPv4`, `IPv6`
-  - Data available for each address: `Country code`, `Country name`, `City`, `Region`
+  - Data available: `Country code`, `Country name`, `City`, `Region`
+- [Hetrix Monitoring IPs](https://docs.hetrixtools.com/uptime-monitoring-ip-addresses/)
+  - IP address types: `IPv4`
+  - Data available: `Country code`, `City`
 
 ## Automated testing
 

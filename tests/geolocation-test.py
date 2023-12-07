@@ -39,7 +39,7 @@ def perform_test(json_file, geoip_db):
         coverage = round(total_covered / total * 100, 2)
         print(f"Covered {total_covered}/{total} ({coverage}%) IP addresses. Got {total_wrong} wrong for an overall accuracy of {accuracy}%")
     else:
-        print("Does not contain the needed info to perform the Pingdom test")
+        print("Does not contain the needed info to perform this test")
 
 def main():
     parser = argparse.ArgumentParser()

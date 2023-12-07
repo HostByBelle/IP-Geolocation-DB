@@ -156,7 +156,7 @@ jobs:
           done
 
   # This test pulls in the Pingdom probe server data which includes their IP addresses and location and utilizes that to validate the results of the databases.
-  run-test-pingdom-probes:
+  run-use-test-data:
     runs-on: ubuntu-latest
     needs: build-database
     steps:
@@ -256,3 +256,11 @@ jobs:
         with:
           name: results
           path: ./results.md
+
+      - name: Upload Test Data
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-data
+          path: |
+            ./tests/IPv6.json
+            ./tests/IPv4.json
