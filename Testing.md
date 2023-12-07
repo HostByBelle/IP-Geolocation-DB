@@ -15,6 +15,12 @@ Best case scenario are where companies self-publish a list of their IP address a
 - [Updown.io Monitoring IPs](https://updown.io/api/nodes)
   - IP address types: `IPv4`, `IPv6`
   - Data available: `Country code`, `City`, `Latitude`, `Longitude`
+- [AWS IP Address Ranges](https://ip-ranges.amazonaws.com/ip-ranges.json)
+  - IP address types: `IPv4`, `IPv6`
+  - Data available: `Country code`
+- [Oracle Cloud IP Address Ranges](https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json) 
+	- IP address types: `IPv4`
+	- Data available: `Country code`
 
 ## Automated testing
 
@@ -27,5 +33,5 @@ For those who are curious how the public domain databases compare to the MaxMind
 
 **Last updated:** 12/06/2023
 
-- IPv4: `Covered 393/394 (99.75%) IP addresses. Got 7 wrong for an overall accuracy of 98.22%`
-- IPv6: `Covered 231/231 (100.0%) IP addresses. Got 6 wrong for an overall accuracy of 97.4%`
+- IPv4: `Covered 8,534,785/8,535,035 (100.0%) IP addresses. Got 328,462 wrong for an overall accuracy of 96.15%. Took 56.19 seconds`
+- IPv6: `Covered 9,912,218/9,912,218 (100.0%) IP addresses. Got 410,088 wrong for an overall accuracy of 95.86%. Took 72.35 seconds`

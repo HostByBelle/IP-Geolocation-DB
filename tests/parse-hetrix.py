@@ -1,6 +1,62 @@
 import argparse
 import re
 import json
+import ipaddress
+
+wk_mapping = {
+    'wk1': {
+        'country_code': 'US',
+        'city': 'New York'
+    },
+    'wk2': {
+        'country_code': 'US',
+        'city': 'San Francisco'
+    },
+    'wk3': {
+        'country_code': 'NL',
+        'city': 'Amsterdam'
+    },
+    'wk4': {
+        'country_code': 'GB',
+        'city': 'London'
+    },
+    'wk5': {
+        'country_code': 'DE',
+        'city': 'Frankfurt'
+    },
+    'wk6': {
+        'country_code': 'SG',
+        'city': 'Singapore'
+    },
+    'wk7': {
+        'country_code': 'US',
+        'city': 'Dallas'
+    },
+    'wk8': {
+        'country_code': 'AUS',
+        'city': 'Sydney'
+        },
+    'wk9': {
+        'country_code': 'BR',
+        'city': 'Sao Paulo'
+    },
+    'wk10': {
+        'country_code': 'JP',
+        'city': 'Tokyo'
+    },
+    'wk11': {
+        'country_code': 'IN',
+        'city': 'Mumbai'
+    },
+    'wk12': {
+        'country_code': 'PL',
+        'city': 'Warsaw'
+    }
+}
+
+def get_range(address):
+    ip_address = ipaddress.ip_address(address)
+    return str(ipaddress.ip_network(f"{ip_address}/{ip_address.max_prefixlen}", strict=False))
 
 def extract_wk(hostname):
     match = re.match(r'^([a-zA-Z]+[0-9]+).*$', hostname)
@@ -28,61 +84,13 @@ def parse(file_path, json_file):
                 wk = extract_wk(hostname)
 
                 if hostname and ip_address and wk:
-                    wk_mapping = {
-                        'wk1': {
-                            'country_code': 'US',
-                            'city': 'New York'
-                        },
-                        'wk2': {
-                            'country_code': 'US',
-                            'city': 'San Francisco'
-                        },
-                        'wk3': {
-                            'country_code': 'NL',
-                            'city': 'Amsterdam'
-                        },
-                        'wk4': {
-                            'country_code': 'GB',
-                            'city': 'London'
-                        },
-                        'wk5': {
-                            'country_code': 'DE',
-                            'city': 'Frankfurt'
-                        },
-                        'wk6': {
-                            'country_code': 'SG',
-                            'city': 'Singapore'
-                        },
-                        'wk7': {
-                            'country_code': 'US',
-                            'city': 'Dallas'
-                        },
-                        'wk8': {
-                            'country_code': 'AUS',
-                            'city': 'Sydney'
-                        },
-                        'wk9': {
-                            'country_code': 'BR',
-                            'city': 'Sao Paulo'
-                        },
-                        'wk10': {
-                            'country_code': 'JP',
-                            'city': 'Tokyo'
-                        },
-                        'wk11': {
-                            'country_code': 'IN',
-                            'city': 'Mumbai'
-                        },
-                        'wk12': {
-                            'country_code': 'PL',
-                            'city': 'Warsaw'
-                        }
-                    }
                     if wk in wk_mapping:
                         data_list.append({
-                            'ip_address': ip_address,
+                            'ip_range': get_range(ip_address),
                             **wk_mapping[wk]
                         })
+                    else:
+                        print(f"{wk} is not yet mapped")
 
         # Write the updated data back to the JSON file
         with open(json_file, 'w', encoding='utf-8') as json_file:

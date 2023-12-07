@@ -1,8 +1,12 @@
 import argparse
 import json
 import xml.etree.ElementTree as ET
+import ipaddress
 
 PINGDOM_NAMESPACE = 'http://www.pingdom.com/ns/PingdomRSSNamespace'
+def get_range(address):
+    ip_address = ipaddress.ip_address(address)
+    return str(ipaddress.ip_network(f"{ip_address}/{ip_address.max_prefixlen}", strict=False))
 
 def parse_xml(xml_file, ip_type, json_file):
     tree = ET.parse(xml_file, parser=ET.XMLParser(encoding="utf-8"))
@@ -32,7 +36,7 @@ def parse_xml(xml_file, ip_type, json_file):
         city = item.find('pingdom:city', {'pingdom': PINGDOM_NAMESPACE}).text
 
         data_list.append({
-            'ip_address': ip_address,
+            'ip_range': get_range(ip_address),
             'country_code': country_code,
             'city': city
         })
