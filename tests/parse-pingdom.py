@@ -44,8 +44,8 @@ def parse_xml(xml_file, ip_type, json_file):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("xml_file", help="path to XML file")
-    parser.add_argument("ip_type", help="type of IP address")
     parser.add_argument("json_file", help="path to output JSON file")
+    parser.add_argument("ip_type", help="type of IP address")
     args = parser.parse_args()
 
     parse_xml(args.xml_file, args.ip_type, args.json_file)

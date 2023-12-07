@@ -156,7 +156,7 @@ jobs:
           done
 
   # This test pulls in the Pingdom probe server data which includes their IP addresses and location and utilizes that to validate the results of the databases.
-  run-test-pingdom-probes:
+  run-use-test-data:
     runs-on: ubuntu-latest
     needs: build-database
     steps:
@@ -176,6 +176,7 @@ jobs:
           chmod +x mmdbcheck
           echo "NOW=$(date '+%D')" >> ${GITHUB_ENV}
           echo "RELEASE_DATE=$(date '+%D %T')" >> ${GITHUB_ENV}
+          mkdir data
 
       - name: Start the results file
         run: |
@@ -184,21 +185,21 @@ jobs:
           echo -e "## Testing Results\n" >> results.md
 
       # Cache key is valid for 1 day & is to make repeat tests more efficient
-      - name: Cache Pingdom Probe Data
+      - name: Cache Testing Data
         uses: actions/cache@v3
-        id: probe-cache
+        id: cache-test-data
         with:
-          path: ./tests/feed.xml
-          key: pingdom-probe-${{ env.NOW }}
+          path: ./data
+          key: testing-data-${{ env.NOW }}
 
-      - name: Download Pingdom Probe Data
-        if: steps.probe-cache.outputs.cache-hit != 'true'
-        working-directory: ./tests
+      - name: Download Test Data
+        if: steps.cache-test-data.outputs.cache-hit != 'true'
+        working-directory: ./data
         run: |
-          curl --show-error \
-            --output feed.xml \
-            --location \
-            "https://www.pingdom.com/rss/probe_servers.xml"
+          curl --show-error --output feed.xml --location "https://www.pingdom.com/rss/probe_servers.xml"
+          curl --show-error --output hetrix.txt --location "https://hetrixtools.com/resources/uptime-monitor-ips.txt"
+          curl --show-error --output updown.json --location "https://updown.io/api/nodes"
+          curl --show-error --output statuscake.json --location "https://app.statuscake.com/Workfloor/Locations.php?format=json"
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -209,10 +210,15 @@ jobs:
         working-directory: ./tests
         run: pip install -r requirements.txt
 
-      - name: Parse Pingdom Data
+      - name: Parse Data
         run: |
-          python ./tests/parse-pingdom.py ./tests/feed.xml ip ./tests/IPv4.json
-          python ./tests/parse-pingdom.py ./tests/feed.xml ipv6 ./tests/IPv6.json
+          python ./tests/parse-pingdom.py ./data/feed.xml ./tests/IPv4.json ip
+          python ./tests/parse-pingdom.py ./data/feed.xml ./tests/IPv6.json ipv6
+          python ./tests/parse-hetrix.py ./data/hetrix.txt ./tests/IPv4.json
+          python ./tests/parse-updown.py ./data/updown.json ./tests/IPv4.json ip
+          python ./tests/parse-updown.py ./data/updown.json ./tests/IPv6.json ip6
+          python ./tests/parse-statuscake.py ./data/statuscake.json ./tests/IPv4.json ip
+          python ./tests/parse-statuscake.py ./data/statuscake.json ./tests/IPv6.json ipv6
 
       - name: Test IPv4 DBs
         run: |
@@ -239,3 +245,11 @@ jobs:
         with:
           name: results
           path: ./results.md
+
+      - name: Upload Test Data
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-data
+          path: |
+            ./tests/IPv6.json
+            ./tests/IPv4.json

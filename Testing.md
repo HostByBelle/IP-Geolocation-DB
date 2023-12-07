@@ -8,7 +8,13 @@ Best case scenario are where companies self-publish a list of their IP address a
 
 - [Pingdom probe server data](https://www.pingdom.com/rss/probe_servers.xml)
   - IP address types: `IPv4`, `IPv6`
-  - Data available for each address: `Country code`, `Country name`, `City`, `Region`
+  - Data available: `Country code`, `Country name`, `City`, `Region`
+- [Hetrix Monitoring IPs](https://docs.hetrixtools.com/uptime-monitoring-ip-addresses/)
+  - IP address types: `IPv4`
+  - Data available: `Country code`, `City`
+- [Updown.io Monitoring IPs](https://updown.io/api/nodes)
+  - IP address types: `IPv4`, `IPv6`
+  - Data available: `Country code`, `City`, `Latitude`, `Longitude`
 
 ## Automated testing
 
@@ -21,5 +27,5 @@ For those who are curious how the public domain databases compare to the MaxMind
 
 **Last updated:** 12/06/2023
 
-- IPv4: `Covered 115/116 (99.14%) IP addresses. Got 1 wrong for an overall accuracy of 99.13%`
-- IPv6: `Covered 67/67 (100.0%) IP addresses. Got 5 wrong for an overall accuracy of 92.54%`
+- IPv4: `Covered 393/394 (99.75%) IP addresses. Got 7 wrong for an overall accuracy of 98.22%`
+- IPv6: `Covered 231/231 (100.0%) IP addresses. Got 6 wrong for an overall accuracy of 97.4%`
