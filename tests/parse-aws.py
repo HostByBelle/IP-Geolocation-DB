@@ -143,7 +143,7 @@ def parse(updown_data, json_file, ipver):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("updown_data", help="path to the aws ranges JSON file")
+    parser.add_argument("updown_data", help="path to the AWS ranges JSON file")
     parser.add_argument("json_file", help="path to output JSON file")
     parser.add_argument("ipver", help="IP version (ip or ipv6)")
     args = parser.parse_args()
