@@ -17,10 +17,7 @@ def parse(updown_data, json_file, ipver):
         for node in updown_nodes:
             data_list.append({
                 'ip_address': updown_nodes[node][ipver],
-                'country_code': updown_nodes[node]['country_code'],
-                'city': updown_nodes[node]['city'],
-                'lat': updown_nodes[node]['lat'],
-                'lng': updown_nodes[node]['lng'],
+                'country_code': updown_nodes[node]['countryiso'],
             })
 
         # Write the updated data back to the JSON file
@@ -29,9 +26,9 @@ def parse(updown_data, json_file, ipver):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("updown_data", help="path to the updown JSON file")
+    parser.add_argument("updown_data", help="path to the statuscake JSON file")
     parser.add_argument("json_file", help="path to output JSON file")
-    parser.add_argument("ipver", help="IP version (ip or ip6)")
+    parser.add_argument("ipver", help="IP version (ip or ipv6)")
     args = parser.parse_args()
 
     parse(args.updown_data, args.json_file, args.ipver)

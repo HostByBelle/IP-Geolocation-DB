@@ -198,7 +198,8 @@ jobs:
         run: |
           curl --show-error --output feed.xml --location "https://www.pingdom.com/rss/probe_servers.xml"
           curl --show-error --output hetrix.txt --location "https://hetrixtools.com/resources/uptime-monitor-ips.txt"
-          curl --show-error --output updown.json --location "https://updown.io/api/nodes"  
+          curl --show-error --output updown.json --location "https://updown.io/api/nodes"
+          curl --show-error --output statuscake.json --location "https://app.statuscake.com/Workfloor/Locations.php?format=json"
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -216,6 +217,8 @@ jobs:
           python ./tests/parse-hetrix.py ./data/hetrix.txt ./tests/IPv4.json
           python ./tests/parse-updown.py ./data/updown.json ./tests/IPv4.json ip
           python ./tests/parse-updown.py ./data/updown.json ./tests/IPv6.json ip6
+          python ./tests/parse-statuscake.py ./data/statuscake.json ./tests/IPv4.json ip
+          python ./tests/parse-statuscake.py ./data/statuscake.json ./tests/IPv6.json ipv6
 
       - name: Test IPv4 DBs
         run: |
