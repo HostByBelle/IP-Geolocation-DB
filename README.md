@@ -14,6 +14,11 @@ These databases are automatically updated daily at 12:00 AM UTC. That may or m
 
 Effort has gone into making these workflows efficient for all parties involved. If you see an inefficiency or issue in the automation process, feel free to report it.
 
+### Testing
+
+Some basic automated testing is performed to help identify which database best suits a given use case.
+These are still being improved and worked on, but you can find the documentation on them [here](https://github.com/HostByBelle/IP-Geolocation-DB/blob/main/Testing.md)
+
 ### Release Retention
 
 This repository is configured to automatically delete releases older than 7 days. For this reason, you should always use the appropriate link which points to the latest release. In the event that something breaks and new releases aren't automatically being published,  the latest release will always be preserved regardless of it's age.

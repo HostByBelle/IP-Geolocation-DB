@@ -226,7 +226,7 @@ jobs:
 
       - name: Test IPv6 DBs
         run: |
-          echo -e "### IPv6 Geolocation (Country) Tests\n" >> results.md
+          echo -e "\n### IPv6 Geolocation (Country) Tests\n" >> results.md
           echo -e "| Database | Result |" >> results.md
           echo -e "|----------|--------|" >> results.md
           find . -type f -name "*v6*.mmdb" -print | while read -r file; do

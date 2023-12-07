@@ -37,7 +37,7 @@ def perform_test(json_file, geoip_db):
     if total and total_covered:
         accuracy = 100 - round(total_wrong / total_covered * 100, 2)
         coverage = round(total_covered / total * 100, 2)
-        print(f"Covered {total_covered}/{total} of tested IP addresses ({coverage}%). It got {total_wrong} wrong for an overall accuracy of {accuracy}%")
+        print(f"Covered {total_covered}/{total} ({coverage}%) IP addresses. Got {total_wrong} wrong for an overall accuracy of {accuracy}%")
     else:
         print("Does not contain the needed info to perform the Pingdom test")
 
