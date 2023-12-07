@@ -104,7 +104,7 @@ region_info = {
         'country_code': 'CN',
     },
     'ap-southeast-5': { #https://www.netify.ai/resources/networks/amazon-aws/pop/ap-southeast-5
-        'country_code': 'CN',
+        'country_code': 'ZN',
     },
 }
 
@@ -122,7 +122,7 @@ def parse(updown_data, json_file, ipver):
         aws_ips = json.load(file)
         for prefix in aws_ips['prefixes']:
             prefix_key = ipver + '_prefix'
-            if(prefix[prefix_key]):
+            if prefix_key in prefix and prefix[prefix_key]:
                 if prefix['region'] in region_info:
                     data_list.append({
                         'ip_range': prefix[prefix_key],
