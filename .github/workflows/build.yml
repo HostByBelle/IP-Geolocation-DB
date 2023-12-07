@@ -196,7 +196,14 @@ jobs:
         id: hetrix-cache
         with:
           path: ./tests/hetrix.txt
-          key: pingdom-probe-${{ env.NOW }}
+          key: hetrix-probe-${{ env.NOW }}
+
+      - name: Cache Hetrix Data
+        uses: actions/cache@v3
+        id: updown-cache
+        with:
+          path: ./tests/updown.json
+          key: updown-probe-${{ env.NOW }}
 
       - name: Download Pingdom Probe Data
         if: steps.probe-cache.outputs.cache-hit != 'true'
@@ -216,6 +223,15 @@ jobs:
             --location \
             "https://hetrixtools.com/resources/uptime-monitor-ips.txt"
 
+      - name: Download Updown Data
+        if: steps.updown-cache.outputs.cache-hit != 'true'
+        working-directory: ./tests
+        run: |
+          curl --show-error \
+            --output updown.json \
+            --location \
+            "https://updown.io/api/nodes"
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -230,6 +246,8 @@ jobs:
           python ./tests/parse-pingdom.py ./tests/feed.xml ip ./tests/IPv4.json
           python ./tests/parse-pingdom.py ./tests/feed.xml ipv6 ./tests/IPv6.json
           python ./tests/parse-hetrix.py ./tests/hetrix.txt ./tests/IPv4.json
+          python ./tests/parse-updown.py ./tests/updown.json ./tests/IPv4.json ip
+          python ./tests/parse-updown.py ./tests/updown.json ./tests/IPv6.json ip6
 
       - name: Test IPv4 DBs
         run: |

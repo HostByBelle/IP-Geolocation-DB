@@ -31,7 +31,7 @@ def perform_test(json_file, geoip_db):
 
             if country_code and location_data and location_data.get('country'):
                 total_covered += 1
-                if country_code != location_data['country']:
+                if country_code.lower() != location_data['country'].lower():
                     total_wrong += 1
 
     if total and total_covered:
