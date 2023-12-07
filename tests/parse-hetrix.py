@@ -5,7 +5,7 @@ import ipaddress
 
 def get_range(address):
     ip_address = ipaddress.ip_address(address)
-    return ipaddress.ip_network(f"{ip_address}/{ip_address.max_prefixlen}", strict=False)
+    return str(ipaddress.ip_network(f"{ip_address}/{ip_address.max_prefixlen}", strict=False))
 
 def extract_wk(hostname):
     match = re.match(r'^([a-zA-Z]+[0-9]+).*$', hostname)

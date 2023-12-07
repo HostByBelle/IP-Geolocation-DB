@@ -4,7 +4,7 @@ import ipaddress
 
 def get_range(address):
     ip_address = ipaddress.ip_address(address)
-    return ipaddress.ip_network(f"{ip_address}/{ip_address.max_prefixlen}", strict=False)
+    return str(ipaddress.ip_network(f"{ip_address}/{ip_address.max_prefixlen}", strict=False))
 
 def parse(updown_data, json_file, ipver):
     data_list = []
