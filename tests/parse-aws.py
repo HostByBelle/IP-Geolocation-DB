@@ -120,7 +120,12 @@ def parse(updown_data, json_file, ipver):
 
     with open(updown_data, 'r') as file:
         aws_ips = json.load(file)
-        for prefix in aws_ips['prefixes']:
+        if ipver == 'ipv6':
+            prefixes = aws_ips['ipv6_prefixes']
+        else:
+            prefixes = aws_ips['prefixes']
+
+        for prefix in prefixes:
             prefix_key = ipver + '_prefix'
             if prefix_key in prefix and prefix[prefix_key]:
                 if prefix['region'] in region_info:

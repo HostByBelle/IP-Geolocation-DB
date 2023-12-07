@@ -3,6 +3,7 @@ import json
 import maxminddb
 import pycountry
 import ipaddress
+from progressbar import progressbar
 
 def get_location_data(reader, ip_address):
     try:
@@ -46,8 +47,15 @@ def perform_test(json_file, geoip_db):
         for data in data_list:
             country_code = data['country_code']
             ip_list = get_ip_list(data['ip_range'])
-            for ip_address in ip_list:
+            
+            total_ips = len(ip_list)
+            # Calculate the step size to evenly distribute the testing
+            step_size = max(1, total_ips // 5000)
+            
+            for i in range(0, total_ips, step_size):
+                ip_address = ip_list[i]
                 total += 1
+                
                 location_data = get_location_data(reader, ip_address)
                 
                 if country_code and location_data and location_data.get('country'):
