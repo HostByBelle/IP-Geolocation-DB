@@ -192,7 +192,7 @@ jobs:
           path: ./data
           key: testing-data-${{ env.NOW }}
 
-      - name: Download Pingdom Probe Data
+      - name: Download Test Data
         if: steps.cache-test-data.outputs.cache-hit != 'true'
         working-directory: ./data
         run: |

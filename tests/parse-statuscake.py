@@ -1,7 +1,6 @@
 import argparse
 import json
 
-#def parse(updown_data, json_file):
 def parse(updown_data, json_file, ipver):
     data_list = []
 
