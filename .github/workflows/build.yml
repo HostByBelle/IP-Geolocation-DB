@@ -175,13 +175,13 @@ jobs:
           mkdir data
 
       - name: Start the results file
-        working-directory: ./tests
         run: |
           echo -e "# Built on: ${{ env.RELEASE_DATE }}\n" > results.md
           echo -e "Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the variants available.\n" >> results.md
           echo -e "## Testing Results\n" >> results.md
 
       - name: Download Testing Data
+        working-directory: ./tests
         run: |
           curl --show-error --output IPv4.json --location "https://github.com/HostByBelle/ip-db-test-data/releases/latest/download/IPv4.json"
           curl --show-error --output IPv6.json --location "https://github.com/HostByBelle/ip-db-test-data/releases/latest/download/IPv6.json"

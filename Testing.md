@@ -1,31 +1,10 @@
 # Database Testing
 
-We are looking for more available data sources to use for testing. The data must be programmatically parse-able, easily accessible, and not reliant on external databases. (Meaning, it can't be another geolocation database.)
-
-Best case scenario are where companies self-publish a list of their IP address and locations as this can be considered a know-good data source.
-
-## Data sources utilized
-
-- [Pingdom probe server data](https://www.pingdom.com/rss/probe_servers.xml)
-  - IP address types: `IPv4`, `IPv6`
-  - Data available: `Country code`, `Country name`, `City`, `Region`
-- [Hetrix Monitoring IPs](https://docs.hetrixtools.com/uptime-monitoring-ip-addresses/)
-  - IP address types: `IPv4`
-  - Data available: `Country code`, `City`
-- [Updown.io Monitoring IPs](https://updown.io/api/nodes)
-  - IP address types: `IPv4`, `IPv6`
-  - Data available: `Country code`, `City`, `Latitude`, `Longitude`
-- [AWS IP Address Ranges](https://ip-ranges.amazonaws.com/ip-ranges.json)
-  - IP address types: `IPv4`, `IPv6`
-  - Data available: `Country code`
-- [Oracle Cloud IP Address Ranges](https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json) 
-	- IP address types: `IPv4`
-	- Data available: `Country code`
+Test data comes from the [ip-db-test-data](https://github.com/HostByBelle/ip-db-test-data) GitHub repository.
 
 ## Automated testing
 
 Each release will automatically be run through testing an the results will be attached as the release body.
-Presently only Country data is tested as we don't have a source for ASN data to test and the current databases don't provide City data.
 
 ### GeoLite2-Country Testing Result
 
