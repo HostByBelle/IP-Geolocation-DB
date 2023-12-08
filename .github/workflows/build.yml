@@ -186,6 +186,15 @@ jobs:
           curl --show-error --output IPv4.json --location "https://github.com/HostByBelle/ip-db-test-data/releases/latest/download/IPv4.json"
           curl --show-error --output IPv6.json --location "https://github.com/HostByBelle/ip-db-test-data/releases/latest/download/IPv6.json"
 
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Install Python Requirements
+        working-directory: ./tests
+        run: pip install -r requirements.txt
+
       - name: Test IPv4 DBs
         run: |
           echo -e "### IPv4 Geolocation (Country) Tests\n" >> results.md
