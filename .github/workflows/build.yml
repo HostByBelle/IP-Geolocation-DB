@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    - cron: 0 0 * * * # Daily at midnight UTC
+    - cron: 1 0 * * * # Daily at 1am UTC
 
 jobs:
   # First we need to compile the mmdbmeld project so we can build the DBs
@@ -175,51 +175,16 @@ jobs:
           mkdir data
 
       - name: Start the results file
+        working-directory: ./tests
         run: |
           echo -e "# Built on: ${{ env.RELEASE_DATE }}\n" > results.md
           echo -e "Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the variants available.\n" >> results.md
           echo -e "## Testing Results\n" >> results.md
 
-      # Cache key is valid for 1 day & is to make repeat tests more efficient
-      - name: Cache Testing Data
-        uses: actions/cache@v3
-        id: cache-test-data
-        with:
-          path: ./data
-          key: testing-data-${{ env.NOW }}
-
-      - name: Download Test Data
-        if: steps.cache-test-data.outputs.cache-hit != 'true'
-        working-directory: ./data
+      - name: Download Testing Data
         run: |
-          curl --show-error --output feed.xml --location "https://www.pingdom.com/rss/probe_servers.xml"
-          curl --show-error --output hetrix.txt --location "https://hetrixtools.com/resources/uptime-monitor-ips.txt"
-          curl --show-error --output updown.json --location "https://updown.io/api/nodes"
-          curl --show-error --output statuscake.json --location "https://app.statuscake.com/Workfloor/Locations.php?format=json"
-          curl --show-error --output aws-ranges.json --location "https://ip-ranges.amazonaws.com/ip-ranges.json"
-          curl --show-error --output oracle-ranges.json --location "https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json"
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.12"
-
-      - name: Install Python Requirements
-        working-directory: ./tests
-        run: pip install -r requirements.txt
-
-      - name: Parse Data
-        run: |
-          python ./tests/parse-pingdom.py ./data/feed.xml ./tests/IPv4.json ip
-          python ./tests/parse-pingdom.py ./data/feed.xml ./tests/IPv6.json ipv6
-          python ./tests/parse-hetrix.py ./data/hetrix.txt ./tests/IPv4.json
-          python ./tests/parse-updown.py ./data/updown.json ./tests/IPv4.json ip
-          python ./tests/parse-updown.py ./data/updown.json ./tests/IPv6.json ip6
-          python ./tests/parse-statuscake.py ./data/statuscake.json ./tests/IPv4.json ip
-          python ./tests/parse-statuscake.py ./data/statuscake.json ./tests/IPv6.json ipv6
-          python ./tests/parse-aws.py ./data/aws-ranges.json ./tests/IPv4.json ip
-          python ./tests/parse-aws.py ./data/aws-ranges.json ./tests/IPv6.json ipv6
-          python ./tests/parse-oracle.py ./data/oracle-ranges.json ./tests/IPv4.json
+          curl --show-error --output IPv4.json --location "https://github.com/HostByBelle/ip-db-test-data/releases/latest/download/IPv4.json"
+          curl --show-error --output IPv6.json --location "https://github.com/HostByBelle/ip-db-test-data/releases/latest/download/IPv6.json"
 
       - name: Test IPv4 DBs
         run: |
