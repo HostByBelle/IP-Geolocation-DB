@@ -10,7 +10,7 @@ Building is handled via the [mmdbmeld](https://github.com/safing/mmdbmeld) golan
 
 ## Automation
 
-These databases are automatically updated daily at 12:00 AM UTC. That may or may not match the schedule for the upstream sources and as such it is possible these databases may be slightly out of date.
+These databases are automatically updated daily at 1:00 AM UTC. That may or may not match the schedule for the upstream sources and as such it is possible these databases may be slightly out of date.
 
 Effort has gone into making these workflows efficient for all parties involved. If you see an inefficiency or issue in the automation process, feel free to report it.
 

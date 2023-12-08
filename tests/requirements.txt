@@ -1,3 +1,2 @@
 maxminddb==2.5.1
 pycountry==22.3.5
-progressbar2==4.2.0
