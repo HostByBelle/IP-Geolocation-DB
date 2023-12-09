@@ -28,11 +28,8 @@ def convert_to_2_letter_code(three_letter_code):
 
 def get_ip_list(cidr):
     network = ipaddress.ip_network(cidr, strict=False)
-    size = network.num_addresses
-    # Limited IP addresses tested per CIDR as an optimization. Otherwise, tests can take way too long.
-    step_size = max(1, size // 5000)
-    for i in range(0, size, step_size):
-        yield network[i]
+    step = max(1, network.num_addresses // 15000) # 10k max IPs per CIDR
+    return range(int(network[0]), int(network[-1]), step)
 
 def perform_test(json_file, geoip_db):
     start_time = time.time()
@@ -49,7 +46,8 @@ def perform_test(json_file, geoip_db):
             country_code = data['country_code']
             ip_list = get_ip_list(data['ip_range'])
             
-            for ip_address in ip_list:
+            for int_ip_address in ip_list:
+                ip_address = ipaddress.ip_address(int_ip_address)
                 total += 1
                 location_data = get_location_data(reader, ip_address)
                 
