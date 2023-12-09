@@ -28,9 +28,8 @@ def convert_to_2_letter_code(three_letter_code):
 
 def get_ip_list(cidr):
     network = ipaddress.ip_network(cidr, strict=False)
-    start = int(network[0])
-    end = int(network[-1])
-    return range(start, end, 1)
+    step = max(1, network.num_addresses // 15000) # 10k max IPs per CIDR
+    return range(int(network[0]), int(network[-1]), step)
 
 def perform_test(json_file, geoip_db):
     start_time = time.time()
