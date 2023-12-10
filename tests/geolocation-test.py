@@ -7,7 +7,7 @@ import time
 
 def get_location_data(reader, ip_address):
     try:
-        location_data = reader.get(ip_address)
+        location_data = reader.get(str(ip_address))
         return {
             'country': location_data['country']['iso_code'],
             'city': location_data.get('city', {}).get('names', {}).get('en', ''),
@@ -45,15 +45,14 @@ def perform_test(json_file, geoip_db):
         for data in data_list:
             country_code = data['country_code']
             ip_list = get_ip_list(data['ip_range'])
-            
-            for int_ip_address in ip_list:
-                ip_address = ipaddress.ip_address(int_ip_address)
+
+            for ip_address in ip_list:
                 total += 1
                 location_data = get_location_data(reader, ip_address)
-                
+
                 if country_code and location_data and location_data.get('country'):
                     total_covered += 1
-                    
+
                     if len(country_code) == 3:
                         country_code = convert_to_2_letter_code(country_code)
 
