@@ -215,11 +215,3 @@ jobs:
         with:
           name: results
           path: ./results.md
-
-      - name: Upload Test Data
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-data
-          path: |
-            ./tests/IPv6.json
-            ./tests/IPv4.json
