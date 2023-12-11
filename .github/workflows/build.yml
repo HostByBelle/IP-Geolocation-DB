@@ -141,7 +141,7 @@ jobs:
 
       - name: Perform mmdbcheck
         run: |
-          find . -type f -name ".mmdb" -print | while read -r file; do
+          find . -type f -name "*.mmdb" -print | while read -r file; do
             ./mmdbcheck all $file
           done
 

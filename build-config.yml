@@ -45,6 +45,8 @@ databases:
       - file: "DBs/geo-whois-asn-country-ipv6.csv"
         fields: ["from", "to", "country.iso_code"]
     output: build/cc0-both-country.mmdb
+    optimize:
+      forceIPVersion: false
 
   ## Start of PDDL ASN DBs
   - name: "IPv4 - PDDL - ASN"
@@ -79,6 +81,8 @@ databases:
         fields:
           ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
     output: build/pddl-asn-both.mmdb
+    optimize:
+      forceIPVersion: false
 
   ## Start of PDDL Country DBs
   - name: "IPv4 - PDDL - Country"
@@ -109,6 +113,8 @@ databases:
       - file: "DBs/iptoasn-country-ipv6.csv"
         fields: ["from", "to", "country.iso_code"]
     output: build/pddl-country-both.mmdb
+    optimize:
+      forceIPVersion: false
 
   ## Start of PDDL Country + ASN DBs
   - name: "IPv4 - PDDL - Country & ASN"
@@ -151,6 +157,8 @@ databases:
         fields:
           ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
     output: build/pddl-country-asn-both.mmdb
+    optimize:
+      forceIPVersion: false
 
   ## Start of CC0 + PDDL Country + ASN DBs (Variant 1)
   - name: "IPv4 - CC0 - PDDL - Country & ASN (Variant 1)"
@@ -197,3 +205,5 @@ databases:
         fields:
           ["from", "to", "autonomous_system_number", "autonomous_system_organization"]
     output: build/cc0-pddl-country-asn-both-variant-1.mmdb
+    optimize:
+      forceIPVersion: false
