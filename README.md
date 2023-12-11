@@ -28,18 +28,18 @@ This repository is configured to automatically delete releases older than 7 days
 These URLs will always point to the latest version of the database.
 
 
-| License | Database Type | IPv4 | IPv6 | 
-|---------|---------------|------|------|
-| [CC0 License](https://creativecommons.org/publicdomain/zero/1.0/) | Country | [cc0-v4.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-v4.mmdb) | [cc0-v6.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-v6.mmdb) |
-| [PDDL License](https://opendatacommons.org/licenses/pddl/1-0/) | ASN | [pddl-asn-v4.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-asn-v4.mmdb) | [pddl-asn-v6.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-asn-v6.mmdb) |
-| [PDDL License](https://opendatacommons.org/licenses/pddl/1-0/) | Country | [pddl-country-v4.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-v4.mmdb) | [pddl-country-v6.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-v6.mmdb) |
-| [PDDL License](https://opendatacommons.org/licenses/pddl/1-0/) | Country + ASN | [pddl-country-asn-v4.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-asn-v4.mmdb) | [pddl-country-asn-v6.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-asn-v6.mmdb) |
-| [CC0 License](https://creativecommons.org/publicdomain/zero/1.0/) + [PDDL License](https://opendatacommons.org/licenses/pddl/1-0/) | Country (CC0) + ASN (PDDL) | [cc0-pddl-country-asn-v4-variant-1.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-pddl-country-asn-v4-variant-1.mmdb) | [cc0-pddl-country-asn-v6-variant-1.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-pddl-country-asn-v6-variant-1.mmdb)|
+| License | Database Type | IPv4 | IPv6 | IPv4 & IPv6 |
+|---------|---------------|------|------|------|
+| [CC0 License](https://creativecommons.org/publicdomain/zero/1.0/) | Country | [cc0-v4-country.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-v4-country.mmdb) | [cc0-v6-country.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-v6-country.mmdb) | [cc0-both-country.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-botgh-country.mmdb) |
+| [PDDL License](https://opendatacommons.org/licenses/pddl/1-0/) | ASN | [pddl-asn-v4.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-asn-v4.mmdb) | [pddl-asn-v6.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-asn-v6.mmdb) | [pddl-asn-both.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-asn-both.mmdb) |
+| [PDDL License](https://opendatacommons.org/licenses/pddl/1-0/) | Country | [pddl-country-v4.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-v4.mmdb) | [pddl-country-v6.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-v6.mmdb) | [pddl-country-both.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-both.mmdb) |
+| [PDDL License](https://opendatacommons.org/licenses/pddl/1-0/) | Country + ASN | [pddl-country-asn-v4.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-asn-v4.mmdb) | [pddl-country-asn-v6.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-asn-v6.mmdb) | [pddl-country-asn-both.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/pddl-country-asn-both.mmdb) |
+| [CC0 License](https://creativecommons.org/publicdomain/zero/1.0/) + [PDDL License](https://opendatacommons.org/licenses/pddl/1-0/) | Country (CC0) + ASN (PDDL) | [cc0-pddl-country-asn-v4-variant-1.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-pddl-country-asn-v4-variant-1.mmdb) | [cc0-pddl-country-asn-v6-variant-1.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-pddl-country-asn-v6-variant-1.mmdb)| [cc0-pddl-country-asn-both-variant-1.mmdb](https://github.com/HostByBelle/IP-Geolocation-DB/releases/latest/download/cc0-pddl-country-asn-both-variant-1.mmdb)|
 
 ### Notes
 
 - `Country` databases include what country an IP address is associated with.
-- `ASN` databases include [ASN](https://www.arin.net/resources/guide/asn/) information for a given address such as what organization the IP address is associated with.
+- `ASN` databases include [ASN](https://www.arin.net/resources/guide/asn/) information for a given IP address.
 
 ## Licensing
 

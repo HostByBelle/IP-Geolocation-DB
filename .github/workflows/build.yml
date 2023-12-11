@@ -139,15 +139,9 @@ jobs:
       - run: |
           chmod +x mmdbcheck
 
-      - name: Test IPv4 DBs
+      - name: Perform mmdbcheck
         run: |
-          find . -type f -name "*v4*.mmdb" -print | while read -r file; do
-            ./mmdbcheck all $file
-          done
-
-      - name: Test IPv6 DBs
-        run: |
-          find . -type f -name "*v6*.mmdb" -print | while read -r file; do
+          find . -type f -name ".mmdb" -print | while read -r file; do
             ./mmdbcheck all $file
           done
 
@@ -177,7 +171,8 @@ jobs:
       - name: Start the results file
         run: |
           echo -e "# Built on: ${{ env.RELEASE_DATE }}\n" > results.md
-          echo -e "Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the variants available.\n" >> results.md
+          echo -e "Releases will not be retained and should not be directly linked to within an application.\n" >> results.md
+          echo -e "Check the project's [readme](https://github.com/HostByBelle/IP-Geolocation-DB#variants) for information about the variants available & the correct download links to use.\n" >> results.md
           echo -e "## Testing Results\n" >> results.md
 
       - name: Download Testing Data
