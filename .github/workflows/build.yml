@@ -48,7 +48,7 @@ jobs:
           cp ./mmdbmeld/cmd/mmdbmeld/mmdbmeld ./mmdbmeld/cmd/mmdbcheck/mmdbcheck ./mmdbmeld/cmd/mmdbquery/mmdbquery ./tools
 
       - name: Upload Tools To Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: tools
           path: ./tools
@@ -117,7 +117,7 @@ jobs:
         run: ./mmdbmeld build-config.yml
 
       - name: Upload Build To Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build
           path: ./build
@@ -211,7 +211,7 @@ jobs:
           done
 
       - name: Upload Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: results
           path: ./results.md
