@@ -1,5 +1,5 @@
 import argparse
-import json
+import ujson
 import maxminddb
 import pycountry
 import ipaddress
@@ -35,7 +35,7 @@ def perform_test(json_file, geoip_db):
     start_time = time.time()
 
     with open(json_file, 'r', encoding='utf-8') as json_file:
-        data_list = json.load(json_file)
+        data_list = ujson.load(json_file)
 
     total = 0
     total_covered = 0
