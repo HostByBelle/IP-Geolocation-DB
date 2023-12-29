@@ -182,7 +182,7 @@ jobs:
           curl --show-error --output IPv6.json --location "https://github.com/HostByBelle/ip-db-test-data/releases/latest/download/IPv6.json"
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
