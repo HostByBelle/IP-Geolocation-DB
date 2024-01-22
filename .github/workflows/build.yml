@@ -17,7 +17,7 @@ jobs:
       MMDBMELD_TAG: v0.3.0
     steps:
       - name: Check for Cached Tools Build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: tools-cache
         with:
           path: ./tools
@@ -73,7 +73,7 @@ jobs:
 
       # Cache key is valid for 1 day & is to make repeat tests more efficient
       - name: Cache DBs
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: DBs-${{ env.NOW }}
           path: ./DBs
