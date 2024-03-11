@@ -32,7 +32,7 @@ jobs:
           echo "RELEASE_TAG=$(date '+%b.%d.%y.%H.%M.%S')" >> ${GITHUB_ENV}
 
       - name: Create New Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             *.mmdb
