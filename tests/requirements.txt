@@ -1,2 +1,2 @@
-maxminddb==2.6.2
+maxminddb==2.6.3
 pycountry==24.6.1
